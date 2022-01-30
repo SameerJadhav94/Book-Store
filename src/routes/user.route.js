@@ -1,28 +1,18 @@
 import express from 'express';
 import * as userController from '../controllers/user.controller';
-import { newUserValidator } from '../validators/user.validator';
+import { newUserValidator, loginValidator } from '../validators/user.validator';
 import { userAuth, setRole } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 
 //routes for user to register
-router.post(
-  '/user',
-  setRole('user'),
-  newUserValidator,
-  userController.register
-);
+router.post('/user', newUserValidator, setRole('user'), userController.register);
 
 //routes for admin to register
-router.post(
-  '/admin',
-  setRole('admin'),
-  newUserValidator,
-  userController.register
-);
+router.post('/admin', newUserValidator, setRole('admin'), userController.register);
 
 //route to login
-router.get('/login', userController.login);
+router.post('/login', loginValidator, userController.login);
 
 //route to get all users
 router.get('', userController.getAllUsers);

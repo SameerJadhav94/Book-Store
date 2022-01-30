@@ -65,7 +65,7 @@ exports.registration = registration;
 
 var login = /*#__PURE__*/function () {
   var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(body) {
-    var data, token, validatePassword, response;
+    var data, token, validatePassword;
     return _regenerator["default"].wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -83,10 +83,18 @@ var login = /*#__PURE__*/function () {
               expiresIn: '100H'
             });
             validatePassword = _bcrypt["default"].compare(body.password, data.password);
-            response = validatePassword ? token : new Error('Invalid password');
-            return _context2.abrupt("return", response);
 
-          case 7:
+            if (!validatePassword) {
+              _context2.next = 9;
+              break;
+            }
+
+            return _context2.abrupt("return", token);
+
+          case 9:
+            throw new Error('Invalid user');
+
+          case 10:
           case "end":
             return _context2.stop();
         }

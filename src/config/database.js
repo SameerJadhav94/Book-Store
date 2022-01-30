@@ -4,10 +4,7 @@ import logger from './logger';
 const database = async () => {
   try {
     // Replace database value in the .env file with your database config url
-    const DATABASE =
-      process.env.NODE_ENV === 'test'
-        ? process.env.DATABASE_TEST
-        : process.env.DATABASE;
+    const DATABASE = process.env.NODE_ENV === 'test' ? process.env.DATABASE_TEST : process.env.DATABASE;
 
     await mongoose.connect(DATABASE, {
       useFindAndModify: false,
