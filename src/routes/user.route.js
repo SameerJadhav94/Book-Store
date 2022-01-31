@@ -30,4 +30,7 @@ router.get('/book', userAuth, bookController.getBook);
 
 //route to get book by id
 router.get('/book/:_id', userAuth, bookController.getBookById);
+
+//route to get book by id
+router.put('/book/:_id', userAuth, bookController.updateBookById);
 export default router;

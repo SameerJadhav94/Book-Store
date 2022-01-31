@@ -18,3 +18,9 @@ export const getBookById = async (id) => {
   const data = await Book.findById(id)
   return data;
 };
+
+//get book by id
+export const updateBookById = async (id, body) => {
+  const data = await Book.findByIdAndUpdate(id, body, {new: true});
+  return data;
+};

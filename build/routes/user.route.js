@@ -42,6 +42,8 @@ router.post('/book', _auth.userAuth, _bookValidator.newBookValidator, bookContro
 
 router.get('/book', _auth.userAuth, bookController.getBook); //route to get book by id
 
-router.get('/book/:_id', _auth.userAuth, bookController.getBookById);
+router.get('/book/:_id', _auth.userAuth, bookController.getBookById); //route to get book by id
+
+router.put('/book/:_id', _auth.userAuth, bookController.updateBookById);
 var _default = router;
 exports["default"] = _default;
