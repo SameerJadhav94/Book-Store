@@ -32,12 +32,6 @@ router.post('/login', _user2.loginValidator, userController.login); //route for 
 
 router.post('/forgotpassword', _user2.emailValidator, userController.forgotPassword); //route to reset password
 
-router.post('/', _user2.newUserValidator, userController.newUser); //route to get a single user by their user id
-
-router.get('/:_id', _auth.userAuth, userController.getUser); //route to update a single user by their user id
-
-router.put('/:_id', userController.updateUser); //route to delete a single user by their user id
-
-router["delete"]('/:_id', userController.deleteUser);
+router.patch('/resetpassword', _user2.resetPasswordValidator, userController.resetPassword);
 var _default = router;
 exports["default"] = _default;

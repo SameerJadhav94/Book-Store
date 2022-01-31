@@ -7,7 +7,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateUser = exports.register = exports.newUser = exports.login = exports.getUser = exports.forgotPassword = exports.deleteUser = void 0;
+exports.updateUser = exports.resetPassword = exports.register = exports.newUser = exports.login = exports.forgotPassword = exports.deleteUser = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -90,7 +90,7 @@ var login = /*#__PURE__*/function () {
             data = _context2.sent;
             res.status(_httpStatusCodes["default"].OK).json({
               code: _httpStatusCodes["default"].OK,
-              data: data,
+              token: data,
               message: 'User login successfully'
             });
             _context2.next = 10;
@@ -160,7 +160,7 @@ var forgotPassword = /*#__PURE__*/function () {
   };
 }();
 /**
- * Controller to get a single user
+ * Controller to reset password
  * @param  {object} req - request object
  * @param {object} res - response object
  * @param {Function} next
@@ -169,7 +169,7 @@ var forgotPassword = /*#__PURE__*/function () {
 
 exports.forgotPassword = forgotPassword;
 
-var getUser = /*#__PURE__*/function () {
+var resetPassword = /*#__PURE__*/function () {
   var _ref4 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(req, res, next) {
     var data;
     return _regenerator["default"].wrap(function _callee4$(_context4) {
@@ -178,14 +178,14 @@ var getUser = /*#__PURE__*/function () {
           case 0:
             _context4.prev = 0;
             _context4.next = 3;
-            return UserService.getUser(req.params._id);
+            return UserService.resetPassword(req.body);
 
           case 3:
             data = _context4.sent;
             res.status(_httpStatusCodes["default"].OK).json({
               code: _httpStatusCodes["default"].OK,
               data: data,
-              message: 'User fetched successfully'
+              message: 'Password reseted successfully'
             });
             _context4.next = 10;
             break;
@@ -203,7 +203,7 @@ var getUser = /*#__PURE__*/function () {
     }, _callee4, null, [[0, 7]]);
   }));
 
-  return function getUser(_x10, _x11, _x12) {
+  return function resetPassword(_x10, _x11, _x12) {
     return _ref4.apply(this, arguments);
   };
 }();
@@ -215,7 +215,7 @@ var getUser = /*#__PURE__*/function () {
  */
 
 
-exports.getUser = getUser;
+exports.resetPassword = resetPassword;
 
 var newUser = /*#__PURE__*/function () {
   var _ref5 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee5(req, res, next) {

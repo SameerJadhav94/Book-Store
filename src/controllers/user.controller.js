@@ -31,7 +31,7 @@ export const login = async (req, res, next) => {
     const data = await UserService.login(req.body);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
-      data: data,
+      token: data,
       message: 'User login successfully'
     });
   } catch (err) {
@@ -57,18 +57,18 @@ export const forgotPassword = async (req, res, next) => {
 };
 
 /**
- * Controller to get a single user
+ * Controller to reset password
  * @param  {object} req - request object
  * @param {object} res - response object
  * @param {Function} next
  */
-export const getUser = async (req, res, next) => {
+export const resetPassword = async (req, res, next) => {
   try {
-    const data = await UserService.getUser(req.params._id);
+    const data = await UserService.resetPassword(req.body);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
       data: data,
-      message: 'User fetched successfully'
+      message: 'Password reseted successfully'
     });
   } catch (error) {
     next(error);

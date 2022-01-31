@@ -5,13 +5,15 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateUser = exports.registration = exports.newUser = exports.login = exports.getUser = exports.forgotPassword = exports.deleteUser = void 0;
+exports.updateUser = exports.resetPassword = exports.registration = exports.login = exports.getUser = exports.forgotPassword = exports.deleteUser = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
 var _user = _interopRequireDefault(require("../models/user.model"));
+
+var _otp = _interopRequireDefault(require("../models/otp"));
 
 var _bcrypt = _interopRequireDefault(require("bcrypt"));
 
@@ -84,19 +86,23 @@ var login = /*#__PURE__*/function () {
             }, process.env.SECRET_KEY, {
               expiresIn: '100H'
             });
-            validatePassword = _bcrypt["default"].compare(body.password, data.password);
+            _context2.next = 6;
+            return _bcrypt["default"].compare(body.password, data.password);
+
+          case 6:
+            validatePassword = _context2.sent;
 
             if (!validatePassword) {
-              _context2.next = 9;
+              _context2.next = 11;
               break;
             }
 
             return _context2.abrupt("return", token);
 
-          case 9:
+          case 11:
             throw new Error('Invalid user');
 
-          case 10:
+          case 12:
           case "end":
             return _context2.stop();
         }
@@ -160,40 +166,97 @@ var forgotPassword = /*#__PURE__*/function () {
   return function forgotPassword(_x3) {
     return _ref3.apply(this, arguments);
   };
-}(); //create new user
+}(); //reset password
 
 
 exports.forgotPassword = forgotPassword;
 
-var newUser = /*#__PURE__*/function () {
+var resetPassword = /*#__PURE__*/function () {
   var _ref4 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(body) {
-    var data;
+    var data, salt, resetedPassword;
     return _regenerator["default"].wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
-            _context4.next = 2;
-            return _user["default"].create(body);
+            _context4.prev = 0;
+            _context4.next = 3;
+            return _otp["default"].findOne({
+              email: body.email,
+              code: body.code
+            });
 
-          case 2:
+          case 3:
             data = _context4.sent;
-            return _context4.abrupt("return", data);
 
-          case 4:
+            if (!data) {
+              _context4.next = 22;
+              break;
+            }
+
+            _context4.next = 7;
+            return _bcrypt["default"].genSalt(12);
+
+          case 7:
+            salt = _context4.sent;
+            _context4.next = 10;
+            return _bcrypt["default"].hash(body.password, salt);
+
+          case 10:
+            body.password = _context4.sent;
+            _context4.next = 13;
+            return _user["default"].updateOne({
+              email: body.email
+            }, {
+              $set: {
+                password: body.password
+              }
+            });
+
+          case 13:
+            resetedPassword = _context4.sent;
+            console.log(resetedPassword);
+
+            if (resetedPassword) {
+              _context4.next = 19;
+              break;
+            }
+
+            return _context4.abrupt("return", 'Could Not Reset Password');
+
+          case 19:
+            return _context4.abrupt("return", resetedPassword);
+
+          case 20:
+            _context4.next = 23;
+            break;
+
+          case 22:
+            return _context4.abrupt("return", 'Check The Code Entered');
+
+          case 23:
+            _context4.next = 28;
+            break;
+
+          case 25:
+            _context4.prev = 25;
+            _context4.t0 = _context4["catch"](0);
+            return _context4.abrupt("return", _context4.t0);
+
+          case 28:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4);
+    }, _callee4, null, [[0, 25]]);
   }));
 
-  return function newUser(_x4) {
+  return function resetPassword(_x4) {
     return _ref4.apply(this, arguments);
   };
 }(); //update single user
 
 
-exports.newUser = newUser;
+exports.resetPassword = resetPassword;
 
 var updateUser = /*#__PURE__*/function () {
   var _ref5 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee5(_id, body) {

@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.newUserValidator = exports.loginValidator = exports.emailValidator = void 0;
+exports.resetPasswordValidator = exports.newUserValidator = exports.loginValidator = exports.emailValidator = void 0;
 
 var _joi = _interopRequireDefault(require("@hapi/joi"));
 
@@ -70,3 +70,24 @@ var emailValidator = function emailValidator(req, res, next) {
 };
 
 exports.emailValidator = emailValidator;
+
+var resetPasswordValidator = function resetPasswordValidator(req, res, next) {
+  var schema = _joi["default"].object({
+    email: _joi["default"].string().pattern(/^[0-9a-zA-Z]+([._+-][0-9a-zA-Z]+)*@([0-9a-zA-Z][-]?)+[.][a-zA-Z]{2,4}([.][a-zA-Z]{2,4})?$/).required(),
+    password: _joi["default"].string().required().pattern(/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/),
+    code: _joi["default"].string().required()
+  });
+
+  var _schema$validate4 = schema.validate(req.body),
+      error = _schema$validate4.error,
+      value = _schema$validate4.value;
+
+  if (error) {
+    next(error);
+  } else {
+    req.validatedBody = value;
+    next();
+  }
+};
+
+exports.resetPasswordValidator = resetPasswordValidator;
