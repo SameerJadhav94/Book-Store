@@ -35,7 +35,8 @@ export const forgotPassword = async (body) => {
     if (!data) {
       return 'Email does not exist';
     } else {
-      return nodeMailer.sendEmail(body);
+      nodeMailer.sendEmail(body);
+      return 'Email sent successfully';
     }
   } catch (err) {
     return err;

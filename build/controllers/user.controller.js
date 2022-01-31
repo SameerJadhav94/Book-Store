@@ -137,9 +137,7 @@ var forgotPassword = /*#__PURE__*/function () {
           case 3:
             data = _context3.sent;
             res.status(_httpStatusCodes["default"].OK).json({
-              code: _httpStatusCodes["default"].OK,
-              data: data,
-              message: 'Email sent successfully'
+              data: data
             });
             _context3.next = 10;
             break;

@@ -136,23 +136,25 @@ var forgotPassword = /*#__PURE__*/function () {
             return _context3.abrupt("return", 'Email does not exist');
 
           case 8:
-            return _context3.abrupt("return", _nodemailer["default"].sendEmail(body));
+            _nodemailer["default"].sendEmail(body);
 
-          case 9:
-            _context3.next = 14;
+            return _context3.abrupt("return", 'Email sent successfully');
+
+          case 10:
+            _context3.next = 15;
             break;
 
-          case 11:
-            _context3.prev = 11;
+          case 12:
+            _context3.prev = 12;
             _context3.t0 = _context3["catch"](0);
             return _context3.abrupt("return", _context3.t0);
 
-          case 14:
+          case 15:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3, null, [[0, 11]]);
+    }, _callee3, null, [[0, 12]]);
   }));
 
   return function forgotPassword(_x3) {

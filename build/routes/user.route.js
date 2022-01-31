@@ -28,11 +28,11 @@ router.post('/user', _user2.newUserValidator, (0, _auth.setRole)('user'), userCo
 
 router.post('/admin', _user2.newUserValidator, (0, _auth.setRole)('admin'), userController.register); //route to login
 
-router.post('/login', _user2.loginValidator, userController.login); //route to get all users
+router.post('/login', _user2.loginValidator, userController.login); //route for forgot password
 
-router.post('/forgotpassword', userController.forgotPassword); //route to create a new user
+router.post('/forgotpassword', _user2.emailValidator, userController.forgotPassword); //route to reset password
 
-router.post('', _user2.newUserValidator, userController.newUser); //route to get a single user by their user id
+router.post('/', _user2.newUserValidator, userController.newUser); //route to get a single user by their user id
 
 router.get('/:_id', _auth.userAuth, userController.getUser); //route to update a single user by their user id
 

@@ -1,6 +1,6 @@
 import express from 'express';
 import * as userController from '../controllers/user.controller';
-import { newUserValidator, loginValidator } from '../validators/user.validator';
+import { newUserValidator, loginValidator, emailValidator } from '../validators/user.validator';
 import { userAuth, setRole } from '../middlewares/auth.middleware';
 
 const router = express.Router();
@@ -14,11 +14,11 @@ router.post('/admin', newUserValidator, setRole('admin'), userController.registe
 //route to login
 router.post('/login', loginValidator, userController.login);
 
-//route to get all users
-router.post('/forgotpassword', userController.forgotPassword);
+//route for forgot password
+router.post('/forgotpassword', emailValidator, userController.forgotPassword);
 
-//route to create a new user
-router.post('', newUserValidator, userController.newUser);
+//route to reset password
+router.post('/', newUserValidator, userController.newUser);
 
 //route to get a single user by their user id
 router.get('/:_id', userAuth, userController.getUser);

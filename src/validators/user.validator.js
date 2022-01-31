@@ -51,3 +51,17 @@ export const loginValidator = (req, res, next) => {
     next();
   }
 };
+export const emailValidator = (req, res, next) => {
+  const schema = Joi.object({
+    email: Joi.string()
+      .pattern(/^[0-9a-zA-Z]+([._+-][0-9a-zA-Z]+)*@([0-9a-zA-Z][-]?)+[.][a-zA-Z]{2,4}([.][a-zA-Z]{2,4})?$/)
+      .required()
+  });
+  const { error, value } = schema.validate(req.body);
+  if (error) {
+    next(error);
+  } else {
+    req.validatedBody = value;
+    next();
+  }
+};
