@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateBookById = exports.getBookById = exports.getBook = exports.addBook = void 0;
+exports.updateBookById = exports.getBookById = exports.getBook = exports.deleteBookById = exports.addBook = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -102,7 +102,7 @@ var getBookById = /*#__PURE__*/function () {
   return function getBookById(_x2) {
     return _ref3.apply(this, arguments);
   };
-}(); //get book by id
+}(); //update book by id
 
 
 exports.getBookById = getBookById;
@@ -134,6 +134,36 @@ var updateBookById = /*#__PURE__*/function () {
   return function updateBookById(_x3, _x4) {
     return _ref4.apply(this, arguments);
   };
-}();
+}(); //delete book by id
+
 
 exports.updateBookById = updateBookById;
+
+var deleteBookById = /*#__PURE__*/function () {
+  var _ref5 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee5(id) {
+    var data;
+    return _regenerator["default"].wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            _context5.next = 2;
+            return _book["default"].findByIdAndDelete(id);
+
+          case 2:
+            data = _context5.sent;
+            return _context5.abrupt("return", data);
+
+          case 4:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5);
+  }));
+
+  return function deleteBookById(_x5) {
+    return _ref5.apply(this, arguments);
+  };
+}();
+
+exports.deleteBookById = deleteBookById;

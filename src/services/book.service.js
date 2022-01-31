@@ -19,8 +19,14 @@ export const getBookById = async (id) => {
   return data;
 };
 
-//get book by id
+//update book by id
 export const updateBookById = async (id, body) => {
   const data = await Book.findByIdAndUpdate(id, body, {new: true});
+  return data;
+};
+
+//delete book by id
+export const deleteBookById = async (id) => {
+  const data = await Book.findByIdAndDelete(id);
   return data;
 };

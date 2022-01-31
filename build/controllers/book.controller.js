@@ -7,7 +7,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateBookById = exports.getBookById = exports.getBook = exports.addBook = void 0;
+exports.updateBookById = exports.getBookById = exports.getBook = exports.deleteBookById = exports.addBook = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -186,14 +186,14 @@ var updateBookById = /*#__PURE__*/function () {
           case 0:
             _context4.prev = 0;
             _context4.next = 3;
-            return BookService.updateBookById(req.params._id, req.body);
+            return BookService.updateBookById(req.params._id);
 
           case 3:
             data = _context4.sent;
             res.status(_httpStatusCodes["default"].OK).json({
               code: _httpStatusCodes["default"].OK,
               data: data,
-              message: "Your Book: \"".concat(data.title, "\".")
+              message: "Your Book: \"".concat(data.title, "\" has been deleted successfully.")
             });
             _context4.next = 10;
             break;
@@ -214,6 +214,55 @@ var updateBookById = /*#__PURE__*/function () {
   return function updateBookById(_x10, _x11, _x12) {
     return _ref4.apply(this, arguments);
   };
-}();
+}(); // Controller for delete book by Id
+
+/**
+ *
+ * @param {object} req request object
+ * @param {object} res  response object
+ * @param {object} next
+ */
+
 
 exports.updateBookById = updateBookById;
+
+var deleteBookById = /*#__PURE__*/function () {
+  var _ref5 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee5(req, res, next) {
+    var data;
+    return _regenerator["default"].wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            _context5.prev = 0;
+            _context5.next = 3;
+            return BookService.deleteBookById(req.params._id);
+
+          case 3:
+            data = _context5.sent;
+            res.status(_httpStatusCodes["default"].OK).json({
+              code: _httpStatusCodes["default"].OK,
+              data: data,
+              message: "Your Book: \"".concat(data.title, "\" has been deleted successfully.")
+            });
+            _context5.next = 10;
+            break;
+
+          case 7:
+            _context5.prev = 7;
+            _context5.t0 = _context5["catch"](0);
+            next(_context5.t0);
+
+          case 10:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5, null, [[0, 7]]);
+  }));
+
+  return function deleteBookById(_x13, _x14, _x15) {
+    return _ref5.apply(this, arguments);
+  };
+}();
+
+exports.deleteBookById = deleteBookById;

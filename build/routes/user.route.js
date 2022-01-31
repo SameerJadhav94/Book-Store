@@ -44,6 +44,8 @@ router.get('/book', _auth.userAuth, bookController.getBook); //route to get book
 
 router.get('/book/:_id', _auth.userAuth, bookController.getBookById); //route to get book by id
 
-router.put('/book/:_id', _auth.userAuth, bookController.updateBookById);
+router.put('/book/:_id', _auth.userAuth, bookController.updateBookById); //route to get book by id
+
+router["delete"]('/book/:_id', _auth.userAuth, bookController.deleteBookById);
 var _default = router;
 exports["default"] = _default;

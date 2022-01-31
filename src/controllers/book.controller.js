@@ -71,11 +71,31 @@ export const getBookById = async (req, res, next) => {
  */
 export const updateBookById = async (req, res, next) => {
   try {
-    const data = await BookService.updateBookById(req.params._id, req.body);
+    const data = await BookService.updateBookById(req.params._id);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
       data: data,
-      message: `Your Book: "${data.title}".`
+      message: `Your Book: "${data.title}" has been deleted successfully.`
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Controller for delete book by Id
+/**
+ *
+ * @param {object} req request object
+ * @param {object} res  response object
+ * @param {object} next
+ */
+export const deleteBookById = async (req, res, next) => {
+  try {
+    const data = await BookService.deleteBookById(req.params._id);
+    res.status(HttpStatus.OK).json({
+      code: HttpStatus.OK,
+      data: data,
+      message: `Your Book: "${data.title}" has been deleted successfully.`
     });
   } catch (err) {
     next(err);
