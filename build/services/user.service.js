@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateUser = exports.resetPassword = exports.registration = exports.login = exports.getUser = exports.forgotPassword = exports.deleteUser = void 0;
+exports.resetPassword = exports.registration = exports.login = exports.forgotPassword = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -189,7 +189,7 @@ var resetPassword = /*#__PURE__*/function () {
             data = _context4.sent;
 
             if (!data) {
-              _context4.next = 22;
+              _context4.next = 21;
               break;
             }
 
@@ -214,137 +214,44 @@ var resetPassword = /*#__PURE__*/function () {
 
           case 13:
             resetedPassword = _context4.sent;
-            console.log(resetedPassword);
 
             if (resetedPassword) {
-              _context4.next = 19;
+              _context4.next = 18;
               break;
             }
 
             return _context4.abrupt("return", 'Could Not Reset Password');
 
-          case 19:
+          case 18:
             return _context4.abrupt("return", resetedPassword);
 
-          case 20:
-            _context4.next = 23;
+          case 19:
+            _context4.next = 22;
             break;
+
+          case 21:
+            return _context4.abrupt("return", 'Check The Otp Entered');
 
           case 22:
-            return _context4.abrupt("return", 'Check The Code Entered');
-
-          case 23:
-            _context4.next = 28;
+            _context4.next = 27;
             break;
 
-          case 25:
-            _context4.prev = 25;
+          case 24:
+            _context4.prev = 24;
             _context4.t0 = _context4["catch"](0);
             return _context4.abrupt("return", _context4.t0);
 
-          case 28:
+          case 27:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4, null, [[0, 25]]);
+    }, _callee4, null, [[0, 24]]);
   }));
 
   return function resetPassword(_x4) {
     return _ref4.apply(this, arguments);
   };
-}(); //update single user
-
-
-exports.resetPassword = resetPassword;
-
-var updateUser = /*#__PURE__*/function () {
-  var _ref5 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee5(_id, body) {
-    var data;
-    return _regenerator["default"].wrap(function _callee5$(_context5) {
-      while (1) {
-        switch (_context5.prev = _context5.next) {
-          case 0:
-            _context5.next = 2;
-            return _user["default"].findByIdAndUpdate({
-              _id: _id
-            }, body, {
-              "new": true
-            });
-
-          case 2:
-            data = _context5.sent;
-            return _context5.abrupt("return", data);
-
-          case 4:
-          case "end":
-            return _context5.stop();
-        }
-      }
-    }, _callee5);
-  }));
-
-  return function updateUser(_x5, _x6) {
-    return _ref5.apply(this, arguments);
-  };
-}(); //delete single user
-
-
-exports.updateUser = updateUser;
-
-var deleteUser = /*#__PURE__*/function () {
-  var _ref6 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee6(id) {
-    return _regenerator["default"].wrap(function _callee6$(_context6) {
-      while (1) {
-        switch (_context6.prev = _context6.next) {
-          case 0:
-            _context6.next = 2;
-            return _user["default"].findByIdAndDelete(id);
-
-          case 2:
-            return _context6.abrupt("return", '');
-
-          case 3:
-          case "end":
-            return _context6.stop();
-        }
-      }
-    }, _callee6);
-  }));
-
-  return function deleteUser(_x7) {
-    return _ref6.apply(this, arguments);
-  };
-}(); //get single user
-
-
-exports.deleteUser = deleteUser;
-
-var getUser = /*#__PURE__*/function () {
-  var _ref7 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee7(id) {
-    var data;
-    return _regenerator["default"].wrap(function _callee7$(_context7) {
-      while (1) {
-        switch (_context7.prev = _context7.next) {
-          case 0:
-            _context7.next = 2;
-            return _user["default"].findById(id);
-
-          case 2:
-            data = _context7.sent;
-            return _context7.abrupt("return", data);
-
-          case 4:
-          case "end":
-            return _context7.stop();
-        }
-      }
-    }, _callee7);
-  }));
-
-  return function getUser(_x8) {
-    return _ref7.apply(this, arguments);
-  };
 }();
 
-exports.getUser = getUser;
+exports.resetPassword = resetPassword;

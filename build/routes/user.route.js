@@ -13,7 +13,11 @@ var _express = _interopRequireDefault(require("express"));
 
 var userController = _interopRequireWildcard(require("../controllers/user.controller"));
 
+var bookController = _interopRequireWildcard(require("../controllers/book.controller"));
+
 var _user2 = require("../validators/user.validator");
+
+var _bookValidator = require("../validators/bookValidator");
 
 var _auth = require("../middlewares/auth.middleware");
 
@@ -32,6 +36,10 @@ router.post('/login', _user2.loginValidator, userController.login); //route for 
 
 router.post('/forgotpassword', _user2.emailValidator, userController.forgotPassword); //route to reset password
 
-router.patch('/resetpassword', _user2.resetPasswordValidator, userController.resetPassword);
+router.patch('/resetpassword', _user2.resetPasswordValidator, userController.resetPassword); //route to add book
+
+router.post('/book', _auth.userAuth, _bookValidator.newBookValidator, bookController.addBook); //route to add book
+
+router.get('/book', _auth.userAuth, bookController.getBook);
 var _default = router;
 exports["default"] = _default;

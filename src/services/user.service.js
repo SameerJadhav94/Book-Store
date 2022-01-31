@@ -51,42 +51,15 @@ export const resetPassword = async (body) => {
       const salt = await bcrypt.genSalt(12);
       body.password = await bcrypt.hash(body.password, salt);
       const resetedPassword = await User.updateOne({ email: body.email }, { $set: { password: body.password } });
-      console.log(resetedPassword);
       if (!resetedPassword) {
         return 'Could Not Reset Password';
       } else {
         return resetedPassword;
       }
     } else {
-      return 'Check The Code Entered';
+      return 'Check The Otp Entered';
     }
   } catch (error) {
     return error;
   }
-};
-
-//update single user
-export const updateUser = async (_id, body) => {
-  const data = await User.findByIdAndUpdate(
-    {
-      _id
-    },
-    body,
-    {
-      new: true
-    }
-  );
-  return data;
-};
-
-//delete single user
-export const deleteUser = async (id) => {
-  await User.findByIdAndDelete(id);
-  return '';
-};
-
-//get single user
-export const getUser = async (id) => {
-  const data = await User.findById(id);
-  return data;
 };

@@ -15,6 +15,9 @@ var _httpStatusCodes = _interopRequireDefault(require("http-status-codes"));
 
 var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
+var _dotenv = _interopRequireDefault(require("dotenv"));
+
+_dotenv["default"].config();
 /**
  * Middleware to authenticate if user has a valid Authorization token
  * Authorization: Bearer <token>
@@ -23,6 +26,8 @@ var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
  * @param {Object} res
  * @param {Function} next
  */
+
+
 var userAuth = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res, next) {
     var bearerToken, _yield$jwt$verify, user;
@@ -47,7 +52,7 @@ var userAuth = /*#__PURE__*/function () {
           case 4:
             bearerToken = bearerToken.split(' ')[1];
             _context.next = 7;
-            return _jsonwebtoken["default"].verify(bearerToken, 'your-secret-key');
+            return _jsonwebtoken["default"].verify(bearerToken, process.env.SECRET_KEY);
 
           case 7:
             _yield$jwt$verify = _context.sent;
