@@ -7,7 +7,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateUser = exports.register = exports.newUser = exports.login = exports.getUser = exports.getAllUsers = exports.deleteUser = void 0;
+exports.updateUser = exports.register = exports.newUser = exports.login = exports.getUser = exports.forgotPassword = exports.deleteUser = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -114,7 +114,7 @@ var login = /*#__PURE__*/function () {
   };
 }();
 /**
- * Controller to get all users available
+ * Controller for forgot password
  * @param  {object} req - request object
  * @param {object} res - response object
  * @param {Function} next
@@ -123,7 +123,7 @@ var login = /*#__PURE__*/function () {
 
 exports.login = login;
 
-var getAllUsers = /*#__PURE__*/function () {
+var forgotPassword = /*#__PURE__*/function () {
   var _ref3 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3(req, res, next) {
     var data;
     return _regenerator["default"].wrap(function _callee3$(_context3) {
@@ -132,14 +132,14 @@ var getAllUsers = /*#__PURE__*/function () {
           case 0:
             _context3.prev = 0;
             _context3.next = 3;
-            return UserService.getAllUsers();
+            return UserService.forgotPassword(req.body);
 
           case 3:
             data = _context3.sent;
             res.status(_httpStatusCodes["default"].OK).json({
               code: _httpStatusCodes["default"].OK,
               data: data,
-              message: 'All users fetched successfully'
+              message: 'Email sent successfully'
             });
             _context3.next = 10;
             break;
@@ -157,7 +157,7 @@ var getAllUsers = /*#__PURE__*/function () {
     }, _callee3, null, [[0, 7]]);
   }));
 
-  return function getAllUsers(_x7, _x8, _x9) {
+  return function forgotPassword(_x7, _x8, _x9) {
     return _ref3.apply(this, arguments);
   };
 }();
@@ -169,7 +169,7 @@ var getAllUsers = /*#__PURE__*/function () {
  */
 
 
-exports.getAllUsers = getAllUsers;
+exports.forgotPassword = forgotPassword;
 
 var getUser = /*#__PURE__*/function () {
   var _ref4 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(req, res, next) {

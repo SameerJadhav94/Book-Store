@@ -15,7 +15,7 @@ router.post('/admin', newUserValidator, setRole('admin'), userController.registe
 router.post('/login', loginValidator, userController.login);
 
 //route to get all users
-router.get('', userController.getAllUsers);
+router.post('/forgotpassword', userController.forgotPassword);
 
 //route to create a new user
 router.post('', newUserValidator, userController.newUser);

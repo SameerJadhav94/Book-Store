@@ -40,18 +40,18 @@ export const login = async (req, res, next) => {
 };
 
 /**
- * Controller to get all users available
+ * Controller for forgot password
  * @param  {object} req - request object
  * @param {object} res - response object
  * @param {Function} next
  */
-export const getAllUsers = async (req, res, next) => {
+export const forgotPassword = async (req, res, next) => {
   try {
-    const data = await UserService.getAllUsers();
+    const data = await UserService.forgotPassword(req.body);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
       data: data,
-      message: 'All users fetched successfully'
+      message: 'Email sent successfully'
     });
   } catch (error) {
     next(error);

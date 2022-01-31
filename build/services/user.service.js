@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateUser = exports.registration = exports.newUser = exports.login = exports.getUser = exports.getAllUsers = exports.deleteUser = void 0;
+exports.updateUser = exports.registration = exports.newUser = exports.login = exports.getUser = exports.forgotPassword = exports.deleteUser = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -18,6 +18,8 @@ var _bcrypt = _interopRequireDefault(require("bcrypt"));
 var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
 var _dotenv = _interopRequireDefault(require("dotenv"));
+
+var _nodemailer = _interopRequireDefault(require("./nodemailer"));
 
 _dotenv["default"].config(); //register user
 
@@ -105,40 +107,61 @@ var login = /*#__PURE__*/function () {
   return function login(_x2) {
     return _ref2.apply(this, arguments);
   };
-}(); //get all users
+}(); //forgot password
 
 
 exports.login = login;
 
-var getAllUsers = /*#__PURE__*/function () {
-  var _ref3 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3() {
+var forgotPassword = /*#__PURE__*/function () {
+  var _ref3 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3(body) {
     var data;
     return _regenerator["default"].wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            _context3.next = 2;
-            return _user["default"].find();
+            _context3.prev = 0;
+            _context3.next = 3;
+            return _user["default"].findOne({
+              email: body.email
+            });
 
-          case 2:
+          case 3:
             data = _context3.sent;
-            return _context3.abrupt("return", data);
 
-          case 4:
+            if (data) {
+              _context3.next = 8;
+              break;
+            }
+
+            return _context3.abrupt("return", 'Email does not exist');
+
+          case 8:
+            return _context3.abrupt("return", _nodemailer["default"].sendEmail(body));
+
+          case 9:
+            _context3.next = 14;
+            break;
+
+          case 11:
+            _context3.prev = 11;
+            _context3.t0 = _context3["catch"](0);
+            return _context3.abrupt("return", _context3.t0);
+
+          case 14:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3);
+    }, _callee3, null, [[0, 11]]);
   }));
 
-  return function getAllUsers() {
+  return function forgotPassword(_x3) {
     return _ref3.apply(this, arguments);
   };
 }(); //create new user
 
 
-exports.getAllUsers = getAllUsers;
+exports.forgotPassword = forgotPassword;
 
 var newUser = /*#__PURE__*/function () {
   var _ref4 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(body) {
@@ -162,7 +185,7 @@ var newUser = /*#__PURE__*/function () {
     }, _callee4);
   }));
 
-  return function newUser(_x3) {
+  return function newUser(_x4) {
     return _ref4.apply(this, arguments);
   };
 }(); //update single user
@@ -196,7 +219,7 @@ var updateUser = /*#__PURE__*/function () {
     }, _callee5);
   }));
 
-  return function updateUser(_x4, _x5) {
+  return function updateUser(_x5, _x6) {
     return _ref5.apply(this, arguments);
   };
 }(); //delete single user
@@ -224,7 +247,7 @@ var deleteUser = /*#__PURE__*/function () {
     }, _callee6);
   }));
 
-  return function deleteUser(_x6) {
+  return function deleteUser(_x7) {
     return _ref6.apply(this, arguments);
   };
 }(); //get single user
@@ -254,7 +277,7 @@ var getUser = /*#__PURE__*/function () {
     }, _callee7);
   }));
 
-  return function getUser(_x7) {
+  return function getUser(_x8) {
     return _ref7.apply(this, arguments);
   };
 }();

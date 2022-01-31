@@ -2,6 +2,7 @@ import User from '../models/user.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import nodeMailer from './nodemailer';
 dotenv.config();
 
 //register user
@@ -27,10 +28,18 @@ export const login = async (body) => {
   }
 };
 
-//get all users
-export const getAllUsers = async () => {
-  const data = await User.find();
-  return data;
+//forgot password
+export const forgotPassword = async (body) => {
+  try {
+    const data = await User.findOne({ email: body.email });
+    if (!data) {
+      return 'Email does not exist';
+    } else {
+      return nodeMailer.sendEmail(body);
+    }
+  } catch (err) {
+    return err;
+  }
 };
 
 //create new user

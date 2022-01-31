@@ -30,7 +30,7 @@ router.post('/admin', _user2.newUserValidator, (0, _auth.setRole)('admin'), user
 
 router.post('/login', _user2.loginValidator, userController.login); //route to get all users
 
-router.get('', userController.getAllUsers); //route to create a new user
+router.post('/forgotpassword', userController.forgotPassword); //route to create a new user
 
 router.post('', _user2.newUserValidator, userController.newUser); //route to get a single user by their user id
 
