@@ -2,6 +2,13 @@
 import HttpStatus from 'http-status-codes';
 import * as BookService from '../services/book.service';
 
+// Controller for add book
+/**
+ *
+ * @param {object} req request object
+ * @param {object} res  response object
+ * @param {object} next
+ */
 export const addBook = async (req, res, next) => {
   try {
     const data = await BookService.addBook(req.body);
@@ -15,6 +22,13 @@ export const addBook = async (req, res, next) => {
   }
 };
 
+// Controller for get book
+/**
+ *
+ * @param {object} req request object
+ * @param {object} res  response object
+ * @param {object} next
+ */
 export const getBook = async (req, res, next) => {
   try {
     const data = await BookService.getBook();

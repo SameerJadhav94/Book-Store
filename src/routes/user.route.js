@@ -25,6 +25,6 @@ router.patch('/resetpassword', resetPasswordValidator, userController.resetPassw
 //route to add book
 router.post('/book', userAuth, newBookValidator, bookController.addBook);
 
-//route to add book
+//route to get book
 router.get('/book', userAuth, bookController.getBook);
 export default router;
