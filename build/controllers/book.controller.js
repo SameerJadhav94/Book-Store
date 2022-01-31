@@ -7,7 +7,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getBook = exports.addBook = void 0;
+exports.getBookById = exports.getBook = exports.addBook = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -22,6 +22,14 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 /* eslint-disable prettier/prettier */
+// Controller for add book
+
+/**
+ *
+ * @param {object} req request object
+ * @param {object} res  response object
+ * @param {object} next
+ */
 var addBook = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res, next) {
     var data;
@@ -59,7 +67,15 @@ var addBook = /*#__PURE__*/function () {
   return function addBook(_x, _x2, _x3) {
     return _ref.apply(this, arguments);
   };
-}();
+}(); // Controller for get book
+
+/**
+ *
+ * @param {object} req request object
+ * @param {object} res  response object
+ * @param {object} next
+ */
+
 
 exports.addBook = addBook;
 
@@ -100,6 +116,55 @@ var getBook = /*#__PURE__*/function () {
   return function getBook(_x4, _x5, _x6) {
     return _ref2.apply(this, arguments);
   };
-}();
+}(); // Controller for get book by Id
+
+/**
+ *
+ * @param {object} req request object
+ * @param {object} res  response object
+ * @param {object} next
+ */
+
 
 exports.getBook = getBook;
+
+var getBookById = /*#__PURE__*/function () {
+  var _ref3 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3(req, res, next) {
+    var data;
+    return _regenerator["default"].wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.prev = 0;
+            _context3.next = 3;
+            return BookService.getBookById(req.params._id);
+
+          case 3:
+            data = _context3.sent;
+            res.status(_httpStatusCodes["default"].OK).json({
+              code: _httpStatusCodes["default"].OK,
+              data: data,
+              message: "Your Book: \"".concat(data.title, "\".")
+            });
+            _context3.next = 10;
+            break;
+
+          case 7:
+            _context3.prev = 7;
+            _context3.t0 = _context3["catch"](0);
+            next(_context3.t0);
+
+          case 10:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3, null, [[0, 7]]);
+  }));
+
+  return function getBookById(_x7, _x8, _x9) {
+    return _ref3.apply(this, arguments);
+  };
+}();
+
+exports.getBookById = getBookById;

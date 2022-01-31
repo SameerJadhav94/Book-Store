@@ -27,4 +27,7 @@ router.post('/book', userAuth, newBookValidator, bookController.addBook);
 
 //route to get book
 router.get('/book', userAuth, bookController.getBook);
+
+//route to get book by id
+router.get('/book/:_id', userAuth, bookController.getBookById);
 export default router;

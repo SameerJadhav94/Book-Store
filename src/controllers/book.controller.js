@@ -41,3 +41,23 @@ export const getBook = async (req, res, next) => {
     next(err);
   }
 };
+
+// Controller for get book by Id
+/**
+ *
+ * @param {object} req request object
+ * @param {object} res  response object
+ * @param {object} next
+ */
+export const getBookById = async (req, res, next) => {
+  try {
+    const data = await BookService.getBookById(req.params._id);
+    res.status(HttpStatus.OK).json({
+      code: HttpStatus.OK,
+      data: data,
+      message: `Your Book: "${data.title}".`
+    });
+  } catch (err) {
+    next(err);
+  }
+};

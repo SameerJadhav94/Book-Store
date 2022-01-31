@@ -38,8 +38,10 @@ router.post('/forgotpassword', _user2.emailValidator, userController.forgotPassw
 
 router.patch('/resetpassword', _user2.resetPasswordValidator, userController.resetPassword); //route to add book
 
-router.post('/book', _auth.userAuth, _bookValidator.newBookValidator, bookController.addBook); //route to add book
+router.post('/book', _auth.userAuth, _bookValidator.newBookValidator, bookController.addBook); //route to get book
 
-router.get('/book', _auth.userAuth, bookController.getBook);
+router.get('/book', _auth.userAuth, bookController.getBook); //route to get book by id
+
+router.get('/book/:_id', _auth.userAuth, bookController.getBookById);
 var _default = router;
 exports["default"] = _default;
