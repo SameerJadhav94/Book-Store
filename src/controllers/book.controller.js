@@ -75,7 +75,7 @@ export const updateBookById = async (req, res, next) => {
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
       data: data,
-      message: `Your Book: "${data.title}" has been deleted successfully.`
+      message: `Your Book: "${data.title}" has been updated successfully.`
     });
   } catch (err) {
     next(err);

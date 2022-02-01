@@ -31,9 +31,9 @@ router.get('/book', userAuth, bookController.getBook);
 //route to get book by id
 router.get('/book/:_id', userAuth, bookController.getBookById);
 
-//route to get book by id
+//route to update book by id
 router.put('/book/:_id', userAuth, bookController.updateBookById);
 
-//route to get book by id
+//route to delete book by id
 router.delete('/book/:_id', userAuth, bookController.deleteBookById);
 export default router;
