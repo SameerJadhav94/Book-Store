@@ -3,7 +3,8 @@ import * as userController from '../controllers/user.controller';
 import * as bookController from '../controllers/book.controller';
 import { newUserValidator, loginValidator, emailValidator, resetPasswordValidator } from '../validators/user.validator';
 import { newBookValidator } from '../validators/bookValidator';
-import { userAuth, setRole } from '../middlewares/auth.middleware';
+import { userAuth, setRole, userRole } from '../middlewares/auth.middleware';
+import { upload } from '../middlewares/upload';
 
 const router = express.Router();
 
@@ -23,7 +24,7 @@ router.post('/forgotpassword', emailValidator, userController.forgotPassword);
 router.patch('/resetpassword', resetPasswordValidator, userController.resetPassword);
 
 //route to add book
-router.post('/book', userAuth, newBookValidator, bookController.addBook);
+router.post('/book', userAuth, userRole, upload.single('image'), newBookValidator, bookController.addBook);
 
 //route to get book
 router.get('/book', userAuth, bookController.getBook);

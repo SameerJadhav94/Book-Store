@@ -3,11 +3,11 @@ import Joi from '@hapi/joi';
 
 export const newBookValidator = (req, res, next) => {
   const schema = Joi.object({
-    author: Joi.string().required().pattern(/^[A-Z]{1}[ A-Za-z]{1,}$/),
+    author: Joi.string().required(),
 
     title: Joi.string().min(2).required(),
 
-    image: Joi.string().required(),
+    image: Joi.string(),
 
     quantity: Joi.number().required(),
 
@@ -15,6 +15,7 @@ export const newBookValidator = (req, res, next) => {
 
     description: Joi.string().required(),
   });
+
   const { error, value } = schema.validate(req.body);
   if (error) {
     next(error);

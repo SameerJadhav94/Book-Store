@@ -81,28 +81,29 @@ var login = /*#__PURE__*/function () {
 
           case 2:
             data = _context2.sent;
+            console.log(data);
             token = _jsonwebtoken["default"].sign({
-              email: body.email
+              data: data
             }, process.env.SECRET_KEY, {
               expiresIn: '100H'
             });
-            _context2.next = 6;
+            _context2.next = 7;
             return _bcrypt["default"].compare(body.password, data.password);
 
-          case 6:
+          case 7:
             validatePassword = _context2.sent;
 
             if (!validatePassword) {
-              _context2.next = 11;
+              _context2.next = 12;
               break;
             }
 
             return _context2.abrupt("return", token);
 
-          case 11:
+          case 12:
             throw new Error('Invalid user');
 
-          case 12:
+          case 13:
           case "end":
             return _context2.stop();
         }

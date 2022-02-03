@@ -17,7 +17,7 @@ export const registration = async (body) => {
 //login user
 export const login = async (body) => {
   const data = await User.findOne({ email: body.email });
-  const token = jwt.sign({ email: body.email }, process.env.SECRET_KEY, {
+  const token = jwt.sign({ data }, process.env.SECRET_KEY, {
     expiresIn: '100H'
   });
   const validatePassword = await bcrypt.compare(body.password, data.password);

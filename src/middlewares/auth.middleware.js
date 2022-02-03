@@ -1,6 +1,8 @@
+/* eslint-disable eqeqeq */
 import HttpStatus from 'http-status-codes';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 /**
@@ -32,8 +34,21 @@ export const userAuth = async (req, res, next) => {
 
 export const setRole = (role) => {
   return async (req, res, next) => {
-    console.log('role', role);
     req.body.role = role;
     next();
   };
+};
+
+export const userRole = (req, res, next) => {
+  let bearerToken = req.header('Authorization');
+  bearerToken = bearerToken.split(' ')[1];
+  const user = jwt.verify(bearerToken, process.env.SECRET_KEY);
+  const role = user.data.role;
+  if (role === 'admin') {
+    next();
+  } else {
+    return res.send({
+      message: 'you are not authorized to make this request'
+    });
+  }
 };

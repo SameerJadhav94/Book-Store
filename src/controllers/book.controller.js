@@ -1,6 +1,10 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable no-unused-vars */
+/* eslint-disable prettier/prettier */
 import HttpStatus from 'http-status-codes';
 import * as BookService from '../services/book.service';
+import Book from '../models/book.model'
+import logger from '../config/logger';
 
 // Controller for add book
 /**
@@ -11,7 +15,15 @@ import * as BookService from '../services/book.service';
  */
 export const addBook = async (req, res, next) => {
   try {
-    const data = await BookService.addBook(req.body);
+    const bookData = {
+      author: req.body.author,
+      title: req.body.title,
+      image: req.file.path,
+      quantity: req.body.quantity,
+      price: req.body.price,
+      description: req.body.description
+    };
+    const data = await BookService.addBook(bookData);
     res.status(HttpStatus.CREATED).json({
       code: HttpStatus.CREATED,
       data: data,

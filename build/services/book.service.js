@@ -14,6 +14,10 @@ var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/
 var _book = _interopRequireDefault(require("../models/book.model"));
 
 /* eslint-disable prettier/prettier */
+
+/* eslint-disable no-unused-vars */
+
+/* eslint-disable prettier/prettier */
 //add book
 var addBook = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(body) {

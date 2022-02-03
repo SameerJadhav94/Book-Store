@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.userAuth = exports.setRole = void 0;
+exports.userRole = exports.userAuth = exports.setRole = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -17,6 +17,7 @@ var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
 var _dotenv = _interopRequireDefault(require("dotenv"));
 
+/* eslint-disable eqeqeq */
 _dotenv["default"].config();
 /**
  * Middleware to authenticate if user has a valid Authorization token
@@ -109,3 +110,25 @@ var setRole = function setRole(role) {
 };
 
 exports.setRole = setRole;
+
+var userRole = function userRole(req, res, next) {
+  var bearerToken = req.header('Authorization');
+  bearerToken = bearerToken.split(' ')[1];
+  console.log(bearerToken);
+
+  var user = _jsonwebtoken["default"].verify(bearerToken, process.env.SECRET_KEY);
+
+  console.log(user);
+  var role = user.data.role;
+  console.log('role', role);
+
+  if (role === 'admin') {
+    next();
+  } else {
+    return res.send({
+      message: 'you are not authorized'
+    });
+  }
+};
+
+exports.userRole = userRole;

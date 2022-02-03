@@ -12,9 +12,9 @@ var _joi = _interopRequireDefault(require("@hapi/joi"));
 /* eslint-disable prettier/prettier */
 var newBookValidator = function newBookValidator(req, res, next) {
   var schema = _joi["default"].object({
-    author: _joi["default"].string().required().pattern(/^[A-Z]{1}[ A-Za-z]{1,}$/),
+    author: _joi["default"].string().required(),
     title: _joi["default"].string().min(2).required(),
-    image: _joi["default"].string().required(),
+    image: _joi["default"].string(),
     quantity: _joi["default"].number().required(),
     price: _joi["default"].number().required(),
     description: _joi["default"].string().required()

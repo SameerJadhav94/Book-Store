@@ -18,8 +18,7 @@ var userSchema = new _mongoose.Schema({
     required: true
   },
   image: {
-    type: String,
-    required: true
+    type: String
   },
   quantity: {
     type: Number,

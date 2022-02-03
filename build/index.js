@@ -25,6 +25,10 @@ var _error = require("./middlewares/error.middleware");
 
 var _logger = _interopRequireWildcard(require("./config/logger"));
 
+var _path = _interopRequireDefault(require("path"));
+
+var _multer = _interopRequireDefault(require("multer"));
+
 var _morgan = _interopRequireDefault(require("morgan"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -48,6 +52,9 @@ app.use((0, _morgan["default"])('combined', {
 }));
 (0, _database["default"])();
 app.use("/api/".concat(api_version), (0, _routes["default"])());
+var upload = (0, _multer["default"])();
+app.use(upload.single());
+app.use('/uploads', _express["default"]["static"](_path["default"].join(__dirname, 'uploads')));
 app.use(_error.appErrorHandler);
 app.use(_error.genericErrorHandler);
 app.use(_error.notFound);
