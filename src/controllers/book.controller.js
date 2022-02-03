@@ -83,7 +83,15 @@ export const getBookById = async (req, res, next) => {
  */
 export const updateBookById = async (req, res, next) => {
   try {
-    const data = await BookService.updateBookById(req.params._id);
+    const bookData = {
+      author: req.body.author,
+      title: req.body.title,
+      image: req.file.path,
+      quantity: req.body.quantity,
+      price: req.body.price,
+      description: req.body.description
+    };
+    const data = await BookService.updateBookById(req.params._id,bookData);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
       data: data,

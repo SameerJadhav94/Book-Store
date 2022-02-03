@@ -33,8 +33,8 @@ router.get('/book', userAuth, bookController.getBook);
 router.get('/book/:_id', userAuth, bookController.getBookById);
 
 //route to update book by id
-router.put('/book/:_id', userAuth, bookController.updateBookById);
+router.put('/book/:_id', userAuth, userRole, upload.single('image'), newBookValidator, bookController.updateBookById);
 
 //route to delete book by id
-router.delete('/book/:_id', userAuth, bookController.deleteBookById);
+router.delete('/book/:_id', userAuth, userRole, bookController.deleteBookById);
 export default router;

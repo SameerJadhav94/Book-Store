@@ -54,31 +54,30 @@ var addBook = /*#__PURE__*/function () {
               price: req.body.price,
               description: req.body.description
             };
-            console.log('11', req.file);
-            _context.next = 5;
+            _context.next = 4;
             return BookService.addBook(bookData);
 
-          case 5:
+          case 4:
             data = _context.sent;
             res.status(_httpStatusCodes["default"].CREATED).json({
               code: _httpStatusCodes["default"].CREATED,
               data: data,
               message: "The Book \"".concat(data.title, "\" has Been Added!")
             });
-            _context.next = 12;
+            _context.next = 11;
             break;
 
-          case 9:
-            _context.prev = 9;
+          case 8:
+            _context.prev = 8;
             _context.t0 = _context["catch"](0);
             next(_context.t0);
 
-          case 12:
+          case 11:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 9]]);
+    }, _callee, null, [[0, 8]]);
   }));
 
   return function addBook(_x, _x2, _x3) {
@@ -196,36 +195,44 @@ exports.getBookById = getBookById;
 
 var updateBookById = /*#__PURE__*/function () {
   var _ref4 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(req, res, next) {
-    var data;
+    var bookData, data;
     return _regenerator["default"].wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
             _context4.prev = 0;
-            _context4.next = 3;
-            return BookService.updateBookById(req.params._id);
+            bookData = {
+              author: req.body.author,
+              title: req.body.title,
+              image: req.file.path,
+              quantity: req.body.quantity,
+              price: req.body.price,
+              description: req.body.description
+            };
+            _context4.next = 4;
+            return BookService.updateBookById(req.params._id, bookData);
 
-          case 3:
+          case 4:
             data = _context4.sent;
             res.status(_httpStatusCodes["default"].OK).json({
               code: _httpStatusCodes["default"].OK,
               data: data,
               message: "Your Book: \"".concat(data.title, "\" has been updated successfully.")
             });
-            _context4.next = 10;
+            _context4.next = 11;
             break;
 
-          case 7:
-            _context4.prev = 7;
+          case 8:
+            _context4.prev = 8;
             _context4.t0 = _context4["catch"](0);
             next(_context4.t0);
 
-          case 10:
+          case 11:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4, null, [[0, 7]]);
+    }, _callee4, null, [[0, 8]]);
   }));
 
   return function updateBookById(_x10, _x11, _x12) {

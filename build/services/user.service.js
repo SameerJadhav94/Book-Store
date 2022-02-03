@@ -69,7 +69,7 @@ exports.registration = registration;
 
 var login = /*#__PURE__*/function () {
   var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(body) {
-    var data, token, validatePassword;
+    var data, payload, token, validatePassword;
     return _regenerator["default"].wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -81,29 +81,34 @@ var login = /*#__PURE__*/function () {
 
           case 2:
             data = _context2.sent;
+            payload = {
+              _id: data._id,
+              firstName: data.firstName,
+              lastName: data.lastName,
+              email: data.email,
+              role: data.role
+            };
             console.log(data);
-            token = _jsonwebtoken["default"].sign({
-              data: data
-            }, process.env.SECRET_KEY, {
+            token = _jsonwebtoken["default"].sign(payload, process.env.SECRET_KEY, {
               expiresIn: '100H'
             });
-            _context2.next = 7;
+            _context2.next = 8;
             return _bcrypt["default"].compare(body.password, data.password);
 
-          case 7:
+          case 8:
             validatePassword = _context2.sent;
 
             if (!validatePassword) {
-              _context2.next = 12;
+              _context2.next = 13;
               break;
             }
 
             return _context2.abrupt("return", token);
 
-          case 12:
+          case 13:
             throw new Error('Invalid user');
 
-          case 13:
+          case 14:
           case "end":
             return _context2.stop();
         }

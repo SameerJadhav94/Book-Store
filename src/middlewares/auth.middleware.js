@@ -43,12 +43,13 @@ export const userRole = (req, res, next) => {
   let bearerToken = req.header('Authorization');
   bearerToken = bearerToken.split(' ')[1];
   const user = jwt.verify(bearerToken, process.env.SECRET_KEY);
-  const role = user.data.role;
+  console.log(user);
+  const role = user.role;
   if (role === 'admin') {
     next();
   } else {
     return res.send({
-      message: 'you are not authorized to make this request'
+      message: 'You are not authorized to make this request'
     });
   }
 };

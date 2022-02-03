@@ -91,11 +91,10 @@ var setRole = function setRole(role) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              console.log('role', role);
               req.body.role = role;
               next();
 
-            case 3:
+            case 2:
             case "end":
               return _context2.stop();
           }
@@ -114,19 +113,17 @@ exports.setRole = setRole;
 var userRole = function userRole(req, res, next) {
   var bearerToken = req.header('Authorization');
   bearerToken = bearerToken.split(' ')[1];
-  console.log(bearerToken);
 
   var user = _jsonwebtoken["default"].verify(bearerToken, process.env.SECRET_KEY);
 
   console.log(user);
-  var role = user.data.role;
-  console.log('role', role);
+  var role = user.role;
 
   if (role === 'admin') {
     next();
   } else {
     return res.send({
-      message: 'you are not authorized'
+      message: 'you are not authorized to make this request'
     });
   }
 };

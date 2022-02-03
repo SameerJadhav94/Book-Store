@@ -46,8 +46,8 @@ router.get('/book', _auth.userAuth, bookController.getBook); //route to get book
 
 router.get('/book/:_id', _auth.userAuth, bookController.getBookById); //route to update book by id
 
-router.put('/book/:_id', _auth.userAuth, bookController.updateBookById); //route to delete book by id
+router.put('/book/:_id', _auth.userAuth, _auth.userRole, _upload.upload.single('image'), _bookValidator.newBookValidator, bookController.updateBookById); //route to delete book by id
 
-router["delete"]('/book/:_id', _auth.userAuth, bookController.deleteBookById);
+router["delete"]('/book/:_id', _auth.userAuth, _auth.userRole, bookController.deleteBookById);
 var _default = router;
 exports["default"] = _default;
