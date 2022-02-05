@@ -1,10 +1,7 @@
 import express from 'express';
 import * as userController from '../controllers/user.controller';
-import * as bookController from '../controllers/book.controller';
 import { newUserValidator, loginValidator, emailValidator, resetPasswordValidator } from '../validators/user.validator';
-import { newBookValidator } from '../validators/bookValidator';
-import { userAuth, setRole, userRole } from '../middlewares/auth.middleware';
-import { upload } from '../middlewares/upload';
+import { setRole } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 
@@ -23,18 +20,4 @@ router.post('/forgotpassword', emailValidator, userController.forgotPassword);
 //route to reset password
 router.patch('/resetpassword', resetPasswordValidator, userController.resetPassword);
 
-//route to add book
-router.post('/book', userAuth, userRole, upload.single('image'), newBookValidator, bookController.addBook);
-
-//route to get book
-router.get('/book', userAuth, bookController.getBook);
-
-//route to get book by id
-router.get('/book/:_id', userAuth, bookController.getBookById);
-
-//route to update book by id
-router.put('/book/:_id', userAuth, userRole, upload.single('image'), newBookValidator, bookController.updateBookById);
-
-//route to delete book by id
-router.delete('/book/:_id', userAuth, userRole, bookController.deleteBookById);
 export default router;

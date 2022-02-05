@@ -32,7 +32,6 @@ var userSchema = new _mongoose.Schema({
 }, {
   timestamps: true
 });
-
-var _default = (0, _mongoose.model)('User', userSchema);
-
+var User = (0, _mongoose.model)('User', userSchema);
+var _default = User;
 exports["default"] = _default;

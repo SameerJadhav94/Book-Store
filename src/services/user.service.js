@@ -24,7 +24,6 @@ export const login = async (body) => {
     email: data.email,
     role: data.role
   };
-  console.log(data);
   const token = jwt.sign(payload, process.env.SECRET_KEY, {
     expiresIn: '100H'
   });

@@ -88,27 +88,26 @@ var login = /*#__PURE__*/function () {
               email: data.email,
               role: data.role
             };
-            console.log(data);
             token = _jsonwebtoken["default"].sign(payload, process.env.SECRET_KEY, {
               expiresIn: '100H'
             });
-            _context2.next = 8;
+            _context2.next = 7;
             return _bcrypt["default"].compare(body.password, data.password);
 
-          case 8:
+          case 7:
             validatePassword = _context2.sent;
 
             if (!validatePassword) {
-              _context2.next = 13;
+              _context2.next = 12;
               break;
             }
 
             return _context2.abrupt("return", token);
 
-          case 13:
+          case 12:
             throw new Error('Invalid user');
 
-          case 14:
+          case 13:
           case "end":
             return _context2.stop();
         }

@@ -11,9 +11,7 @@ exports["default"] = void 0;
 
 var _express = _interopRequireDefault(require("express"));
 
-var userController = _interopRequireWildcard(require("../controllers/user.controller"));
-
-var _user2 = require("../validators/user.validator");
+var cartController = _interopRequireWildcard(require("../controllers/cart.controller"));
 
 var _auth = require("../middlewares/auth.middleware");
 
@@ -21,17 +19,10 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var router = _express["default"].Router(); //routes for user to register
+/* eslint-disable prettier/prettier */
+var cartRouter = _express["default"].Router(); //route to add book to cart
 
 
-router.post('/user', _user2.newUserValidator, (0, _auth.setRole)('user'), userController.register); //routes for admin to register
-
-router.post('/admin', _user2.newUserValidator, (0, _auth.setRole)('admin'), userController.register); //route to login
-
-router.post('/login', _user2.loginValidator, userController.login); //route for forgot password
-
-router.post('/forgotpassword', _user2.emailValidator, userController.forgotPassword); //route to reset password
-
-router.patch('/resetpassword', _user2.resetPasswordValidator, userController.resetPassword);
-var _default = router;
+cartRouter.post('/:_id', _auth.userAuth, cartController.addToCart);
+var _default = cartRouter;
 exports["default"] = _default;

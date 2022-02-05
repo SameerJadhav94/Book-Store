@@ -31,5 +31,5 @@ const userSchema = new Schema(
     timestamps: true
   }
 );
-
-export default model('Book', userSchema);
+const Book = model('Book', userSchema);
+export default Book;
