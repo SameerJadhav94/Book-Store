@@ -42,8 +42,7 @@ var addToCart = /*#__PURE__*/function () {
             data = _context.sent;
             res.status(_httpStatusCodes["default"].CREATED).json({
               code: _httpStatusCodes["default"].CREATED,
-              data: data,
-              message: "The Book has Been Added To Cart!"
+              data: data
             });
             _context.next = 11;
             break;

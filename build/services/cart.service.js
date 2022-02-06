@@ -163,7 +163,7 @@ var addToCart = /*#__PURE__*/function () {
           case 45:
             _context.prev = 45;
             _context.t0 = _context["catch"](0);
-            throw new Error("The Book is out of stock for now, Please try after some time");
+            throw new Error("Cannot add the book to cart!");
 
           case 48:
           case "end":
