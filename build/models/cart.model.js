@@ -37,7 +37,11 @@ var cartSchema = new _mongoose.Schema({
     type: String,
     required: true
   }],
-  quantity: {
+  quantityPerBook: [{
+    type: Number,
+    required: true
+  }],
+  totalQuantity: {
     type: Number,
     required: true
   },

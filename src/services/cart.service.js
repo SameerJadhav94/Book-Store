@@ -7,14 +7,17 @@ import Book from '../models/book.model';
 export const addToCart = async (cart) => {
   try {
     const bookData = await Book.findById({ _id: cart.bookId });
-    if (cart.quantity > bookData.quantity) {
+    if (bookData.quantity===0) {
+      return `${bookData.title} is currently out of stock, please come back later.`
+    }
+    else if (cart.quantity > bookData.quantity) {
       return `Please select quantity less than ${bookData.quantity}.`;
     } else {
       const checkCart = await Cart.findOne();
       if (checkCart) {
         //Adding the quantity of the book
-        checkCart.quantity = checkCart.quantity + cart.quantity;
-        const finalQuantity = checkCart.quantity;
+        checkCart.totalQuantity = checkCart.totalQuantity + cart.quantity;
+        const finalQuantity = checkCart.totalQuantity;
         //Price of books for the quantity
         const bookPrice = cart.quantity * bookData.price;
         //Total Price of books in the cart
@@ -30,7 +33,8 @@ export const addToCart = async (cart) => {
           userId: cart.userId,
           bookId: [...checkCart.bookId,cart.bookId],
           bookName:[...checkCart.bookName, bookData.title],
-          quantity: finalQuantity,
+          quantityPerBook:[...checkCart.quantityPerBook, cart.quantity],
+          totalQuantity: finalQuantity,
           prices: [...checkCart.prices],
           total:finalPrice,
           isPurchased: false
@@ -46,11 +50,7 @@ export const addToCart = async (cart) => {
           price: bookData.price,
           description: bookData.description
         };
-        const updateInventory = await Book.findByIdAndUpdate(bookData._id, updatedData, {new: true});
-        //Delete If Quantity Is Zero
-        if (updateInventory.quantity===0) {
-          await Book.findByIdAndDelete(bookData._id);
-        }
+        await Book.findByIdAndUpdate(bookData._id, updatedData, {new: true});
         return book;
       } else {
         //Price of books for the quantity
@@ -60,7 +60,8 @@ export const addToCart = async (cart) => {
           userId: cart.userId,
           bookId: [cart.bookId],
           bookName:[bookData.title],
-          quantity: cart.quantity,
+          quantityPerBook:[cart.quantity],
+          totalQuantity:cart.quantity,
           prices: [bookPrice],
           total: bookPrice,
           isPurchased: false
@@ -76,15 +77,11 @@ export const addToCart = async (cart) => {
           price: bookData.price,
           description: bookData.description
         };
-        const updateInventory = await Book.findByIdAndUpdate(bookData._id, updatedData, {new: true});
-        //Delete If Quantity Is Zero
-        if (updateInventory.quantity===0) {
-          await Book.findByIdAndDelete(bookData._id);
-        }
+        await Book.findByIdAndUpdate(bookData._id, updatedData, {new: true});
         return book;
       }
     }
   } catch (error) {
-    throw new Error(`The Book is out of stock for now, Please try after some time`);
+    throw new Error(`Cannot add the book to cart!`);
   }
 };

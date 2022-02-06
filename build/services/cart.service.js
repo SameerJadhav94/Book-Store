@@ -24,7 +24,7 @@ var _book2 = _interopRequireDefault(require("../models/book.model"));
 /* eslint-disable prettier/prettier */
 var addToCart = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(cart) {
-    var bookData, checkCart, finalQuantity, bookPrice, priceArray, totalPrice, i, finalPrice, data, book, updatedData, updateInventory, _bookPrice, _data, _book, _updatedData, _updateInventory;
+    var bookData, checkCart, finalQuantity, bookPrice, priceArray, totalPrice, i, finalPrice, data, book, updatedData, _bookPrice, _data, _book, _updatedData;
 
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
@@ -39,18 +39,26 @@ var addToCart = /*#__PURE__*/function () {
           case 3:
             bookData = _context.sent;
 
-            if (!(cart.quantity > bookData.quantity)) {
+            if (!(bookData.quantity === 0)) {
               _context.next = 8;
+              break;
+            }
+
+            return _context.abrupt("return", "".concat(bookData.title, " is currently out of stock, please come back later."));
+
+          case 8:
+            if (!(cart.quantity > bookData.quantity)) {
+              _context.next = 12;
               break;
             }
 
             return _context.abrupt("return", "Please select quantity less than ".concat(bookData.quantity, "."));
 
-          case 8:
-            _context.next = 10;
+          case 12:
+            _context.next = 14;
             return _cart["default"].findOne();
 
-          case 10:
+          case 14:
             checkCart = _context.sent;
 
             if (!checkCart) {
@@ -59,8 +67,8 @@ var addToCart = /*#__PURE__*/function () {
             }
 
             //Adding the quantity of the book
-            checkCart.quantity = checkCart.quantity + cart.quantity;
-            finalQuantity = checkCart.quantity; //Price of books for the quantity
+            checkCart.totalQuantity = checkCart.totalQuantity + cart.quantity;
+            finalQuantity = checkCart.totalQuantity; //Price of books for the quantity
 
             bookPrice = cart.quantity * bookData.price; //Total Price of books in the cart
 
@@ -78,21 +86,23 @@ var addToCart = /*#__PURE__*/function () {
               userId: cart.userId,
               bookId: [].concat((0, _toConsumableArray2["default"])(checkCart.bookId), [cart.bookId]),
               bookName: [].concat((0, _toConsumableArray2["default"])(checkCart.bookName), [bookData.title]),
-              quantity: finalQuantity,
+              quantityPerBook: [].concat((0, _toConsumableArray2["default"])(checkCart.quantityPerBook), [cart.quantity]),
+              totalQuantity: finalQuantity,
               prices: (0, _toConsumableArray2["default"])(checkCart.prices),
               total: finalPrice,
               isPurchased: false
             }; //Mongoose query to update the cart
 
-            _context.next = 23;
+            _context.next = 27;
             return _cart["default"].findByIdAndUpdate({
               _id: checkCart._id
             }, data, {
               "new": true
             });
 
-          case 23:
+          case 27:
             book = _context.sent;
+            //Update The Book Quantity In The Inventory
             updatedData = {
               author: bookData.author,
               title: bookData.title,
@@ -101,21 +111,10 @@ var addToCart = /*#__PURE__*/function () {
               price: bookData.price,
               description: bookData.description
             };
-            _context.next = 27;
+            _context.next = 31;
             return _book2["default"].findByIdAndUpdate(bookData._id, updatedData, {
               "new": true
             });
-
-          case 27:
-            updateInventory = _context.sent;
-
-            if (!(updateInventory.quantity === 0)) {
-              _context.next = 31;
-              break;
-            }
-
-            _context.next = 31;
-            return _book2["default"].findByIdAndDelete(bookData._id);
 
           case 31:
             return _context.abrupt("return", book);
@@ -128,7 +127,8 @@ var addToCart = /*#__PURE__*/function () {
               userId: cart.userId,
               bookId: [cart.bookId],
               bookName: [bookData.title],
-              quantity: cart.quantity,
+              quantityPerBook: [cart.quantity],
+              totalQuantity: cart.quantity,
               prices: [_bookPrice],
               total: _bookPrice,
               isPurchased: false
@@ -139,6 +139,7 @@ var addToCart = /*#__PURE__*/function () {
 
           case 38:
             _book = _context.sent;
+            //Update The Book Quantity In The Inventory
             _updatedData = {
               author: bookData.author,
               title: bookData.title,
@@ -153,34 +154,23 @@ var addToCart = /*#__PURE__*/function () {
             });
 
           case 42:
-            _updateInventory = _context.sent;
-
-            if (!(_updateInventory.quantity === 0)) {
-              _context.next = 46;
-              break;
-            }
-
-            _context.next = 46;
-            return _book2["default"].findByIdAndDelete(bookData._id);
-
-          case 46:
             return _context.abrupt("return", _book);
 
-          case 47:
-            _context.next = 52;
+          case 43:
+            _context.next = 48;
             break;
 
-          case 49:
-            _context.prev = 49;
+          case 45:
+            _context.prev = 45;
             _context.t0 = _context["catch"](0);
-            throw new Error("The Book is out of stock for now, Please try again later.");
+            throw new Error("The Book is out of stock for now, Please try after some time");
 
-          case 52:
+          case 48:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 49]]);
+    }, _callee, null, [[0, 45]]);
   }));
 
   return function addToCart(_x) {

@@ -12,8 +12,7 @@ export const addToCart = async (req, res, next) => {
     const data = await CartService.addToCart(cartData);
     res.status(HttpStatus.CREATED).json({
       code: HttpStatus.CREATED,
-      data: data,
-      message: `The Book has Been Added To Cart!`
+      data: data
     });
   } catch (error) {
     next(error);
