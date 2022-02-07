@@ -162,18 +162,19 @@ export const removeBookFromCart = async (body) => {
         return data;
       } else {
         const idOfBookToUpdate = cartData.bookId[index];
-
+        //Deleting Data from Particular Index
         BookNameArray.splice(index, 1);
         IdArray.splice(index, 1);
         QtyArray.splice(index, 1);
         PricesArray.splice(index, 1);
         cartData.totalQuantity = cartData.totalQuantity - body.quantity;
+        //Calculating Total Price
         let totalPrice = 0;
         for (let i = 0; i <= PricesArray.length - 1; i++) {
           totalPrice = totalPrice + PricesArray[i];
         }
         const finalPrice = totalPrice;
-
+        //Object To Update Cart
         const updatedCartData = {
           userId: body.userId,
           bookId: IdArray,
@@ -188,7 +189,7 @@ export const removeBookFromCart = async (body) => {
         const data = await Cart.findByIdAndUpdate(cartData._id, updatedCartData, { new: true });
         
         const bookData = await Book.findById({ _id: idOfBookToUpdate });
-
+        //Object To Update Main Inventory
         const updatedBookData = {
           author: bookData.author,
           title: bookData.title,
@@ -199,6 +200,7 @@ export const removeBookFromCart = async (body) => {
         };
 
         await Book.findByIdAndUpdate(idOfBookToUpdate, updatedBookData, { new: true });
+        //Delete The Document If The Quantity In The Cart Is Zero
         if (data.total === 0) {
           await Cart.findByIdAndDelete(cartData._id);
           return 'The cart is empty.';

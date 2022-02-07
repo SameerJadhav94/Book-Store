@@ -85,11 +85,30 @@ var removeBookFromCart = /*#__PURE__*/function () {
 
           case 4:
             data = _context2.sent;
-            res.status(_httpStatusCodes["default"].OK).json({
-              code: _httpStatusCodes["default"].OK,
-              data: data,
-              message: "Your Book has been removed from cart."
-            });
+
+            if (data === 'Cart is empty.') {
+              res.status(_httpStatusCodes["default"].BAD_REQUEST).json({
+                code: _httpStatusCodes["default"].BAD_REQUEST,
+                message: 'Your Cart Does Not Have Any Books.'
+              });
+            } else if (data === 'The cart is empty.') {
+              res.status(_httpStatusCodes["default"].OK).json({
+                code: _httpStatusCodes["default"].OK,
+                message: 'All The Books Has Been Removed From The Cart.'
+              });
+            } else if (data === 'Cannot remove book from cart') {
+              res.status(_httpStatusCodes["default"].INTERNAL_SERVER_ERROR).json({
+                code: _httpStatusCodes["default"].INTERNAL_SERVER_ERROR,
+                message: 'Problem occured while removing book from cart.'
+              });
+            } else {
+              res.status(_httpStatusCodes["default"].OK).json({
+                code: _httpStatusCodes["default"].OK,
+                data: data,
+                message: 'Book has been removed from cart.'
+              });
+            }
+
             _context2.next = 11;
             break;
 

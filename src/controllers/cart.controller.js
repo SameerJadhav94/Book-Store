@@ -27,11 +27,29 @@ export const removeBookFromCart = async (req, res, next) => {
       quantity: req.body.quantity
     }
     const data = await CartService.removeBookFromCart(bookData);
-    res.status(HttpStatus.OK).json({
-      code: HttpStatus.OK,
-      data: data,
-      message: `Your Book has been removed from cart.`
-    });
+    if (data==='Cart is empty.') {
+      res.status(HttpStatus.BAD_REQUEST).json({
+        code: HttpStatus.BAD_REQUEST,
+        message: 'Your Cart Does Not Have Any Books.'
+      })
+    }
+    else if(data==='The cart is empty.'){
+      res.status(HttpStatus.OK).json({
+        code: HttpStatus.OK,
+        message: 'All The Books Has Been Removed From The Cart.'
+      });
+    }else if(data==='Cannot remove book from cart'){
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: 'Problem occured while removing book from cart.'
+      });
+    }else{
+      res.status(HttpStatus.OK).json({
+        code: HttpStatus.OK,
+        data: data,
+        message: 'Book has been removed from cart.'
+      });
+    }
   } catch (err) {
     next(err);
   }

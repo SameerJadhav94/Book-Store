@@ -26,6 +26,12 @@ var _book2 = _interopRequireDefault(require("../models/book.model"));
 /* eslint-disable no-unused-vars */
 
 /* eslint-disable prettier/prettier */
+
+/**
+ * Service For Add To Cart
+ * @param {object} cart cart object 
+ * @returns 
+ */
 var addToCart = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(cart) {
     var bookData, checkCart, finalQuantity, bookPrice, priceArray, totalPrice, i, finalPrice, data, book, updatedData, _bookPrice, _data, _book, _updatedData;
@@ -183,7 +189,7 @@ var addToCart = /*#__PURE__*/function () {
 }();
 /**
  * Service for Remove From Cart
- * @param {*} body 
+ * @param {object} body - body object
  * @returns 
  */
 
@@ -293,19 +299,22 @@ var removeBookFromCart = /*#__PURE__*/function () {
             return _context2.abrupt("return", data);
 
           case 41:
-            _idOfBookToUpdate = cartData.bookId[index];
+            _idOfBookToUpdate = cartData.bookId[index]; //Deleting Data from Particular Index
+
             BookNameArray.splice(index, 1);
             IdArray.splice(index, 1);
             QtyArray.splice(index, 1);
             PricesArray.splice(index, 1);
-            cartData.totalQuantity = cartData.totalQuantity - body.quantity;
+            cartData.totalQuantity = cartData.totalQuantity - body.quantity; //Calculating Total Price
+
             _totalPrice = 0;
 
             for (_i = 0; _i <= PricesArray.length - 1; _i++) {
               _totalPrice = _totalPrice + PricesArray[_i];
             }
 
-            _finalPrice = _totalPrice;
+            _finalPrice = _totalPrice; //Object To Update Cart
+
             _updatedCartData = {
               userId: body.userId,
               bookId: IdArray,
@@ -330,6 +339,7 @@ var removeBookFromCart = /*#__PURE__*/function () {
 
           case 56:
             _bookData = _context2.sent;
+            //Object To Update Main Inventory
             _updatedBookData = {
               author: _bookData.author,
               title: _bookData.title,
