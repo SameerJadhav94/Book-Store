@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addToCart = void 0;
+exports.removeBookFromCart = exports.addToCart = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -16,6 +16,10 @@ var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/
 var _cart = _interopRequireDefault(require("../models/cart.model"));
 
 var _book2 = _interopRequireDefault(require("../models/book.model"));
+
+/* eslint-disable prettier/prettier */
+
+/* eslint-disable no-trailing-spaces */
 
 /* eslint-disable prettier/prettier */
 
@@ -177,5 +181,203 @@ var addToCart = /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }();
+/**
+ * Service for Remove From Cart
+ * @param {*} body 
+ * @returns 
+ */
+
 
 exports.addToCart = addToCart;
+
+var removeBookFromCart = /*#__PURE__*/function () {
+  var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(body) {
+    var cartData, BookNameArray, IdArray, QtyArray, PricesArray, index, currentQty, totalPrice, i, finalPrice, updatedCartData, data, idOfBookToUpdate, bookData, updatedBookData, _idOfBookToUpdate, _totalPrice, _i, _finalPrice, _updatedCartData, _data2, _bookData, _updatedBookData;
+
+    return _regenerator["default"].wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            _context2.next = 3;
+            return _cart["default"].findOne();
+
+          case 3:
+            cartData = _context2.sent;
+
+            if (cartData) {
+              _context2.next = 8;
+              break;
+            }
+
+            return _context2.abrupt("return", 'Cart is empty.');
+
+          case 8:
+            //Cloning the arrays
+            BookNameArray = (0, _toConsumableArray2["default"])(cartData.bookName);
+            IdArray = (0, _toConsumableArray2["default"])(cartData.bookId);
+            QtyArray = (0, _toConsumableArray2["default"])(cartData.quantityPerBook);
+            PricesArray = (0, _toConsumableArray2["default"])(cartData.prices); //Getting The Index 
+
+            index = BookNameArray.indexOf(body.title);
+            currentQty = cartData.quantityPerBook[index] - body.quantity;
+
+            if (!(cartData.quantityPerBook[index] - body.quantity !== 0)) {
+              _context2.next = 41;
+              break;
+            }
+
+            BookNameArray[index] = body.title;
+            IdArray[index] = cartData.bookId[index];
+            QtyArray[index] = currentQty;
+            PricesArray[index] = cartData.prices[index] / cartData.quantityPerBook[index] * currentQty;
+            cartData.totalQuantity = cartData.totalQuantity - body.quantity;
+            totalPrice = 0;
+
+            for (i = 0; i <= PricesArray.length - 1; i++) {
+              totalPrice = totalPrice + PricesArray[i];
+            }
+
+            finalPrice = totalPrice;
+            updatedCartData = {
+              userId: body.userId,
+              bookId: IdArray,
+              bookName: BookNameArray,
+              quantityPerBook: QtyArray,
+              totalQuantity: cartData.totalQuantity,
+              prices: PricesArray,
+              total: finalPrice,
+              isPurchased: false
+            };
+            _context2.next = 26;
+            return _cart["default"].findByIdAndUpdate(cartData._id, updatedCartData, {
+              "new": true
+            });
+
+          case 26:
+            data = _context2.sent;
+            idOfBookToUpdate = cartData.bookId[index];
+            _context2.next = 30;
+            return _book2["default"].findById({
+              _id: idOfBookToUpdate
+            });
+
+          case 30:
+            bookData = _context2.sent;
+            updatedBookData = {
+              author: bookData.author,
+              title: bookData.title,
+              image: bookData.image,
+              quantity: bookData.quantity + body.quantity,
+              price: bookData.price,
+              description: bookData.description
+            };
+            _context2.next = 34;
+            return _book2["default"].findByIdAndUpdate(idOfBookToUpdate, updatedBookData, {
+              "new": true
+            });
+
+          case 34:
+            if (!(data.total === 0)) {
+              _context2.next = 38;
+              break;
+            }
+
+            _context2.next = 37;
+            return _cart["default"].findByIdAndDelete(cartData._id);
+
+          case 37:
+            return _context2.abrupt("return", 'The cart is empty.');
+
+          case 38:
+            return _context2.abrupt("return", data);
+
+          case 41:
+            _idOfBookToUpdate = cartData.bookId[index];
+            BookNameArray.splice(index, 1);
+            IdArray.splice(index, 1);
+            QtyArray.splice(index, 1);
+            PricesArray.splice(index, 1);
+            cartData.totalQuantity = cartData.totalQuantity - body.quantity;
+            _totalPrice = 0;
+
+            for (_i = 0; _i <= PricesArray.length - 1; _i++) {
+              _totalPrice = _totalPrice + PricesArray[_i];
+            }
+
+            _finalPrice = _totalPrice;
+            _updatedCartData = {
+              userId: body.userId,
+              bookId: IdArray,
+              bookName: BookNameArray,
+              quantityPerBook: QtyArray,
+              totalQuantity: cartData.totalQuantity,
+              prices: PricesArray,
+              total: _finalPrice,
+              isPurchased: false
+            };
+            _context2.next = 53;
+            return _cart["default"].findByIdAndUpdate(cartData._id, _updatedCartData, {
+              "new": true
+            });
+
+          case 53:
+            _data2 = _context2.sent;
+            _context2.next = 56;
+            return _book2["default"].findById({
+              _id: _idOfBookToUpdate
+            });
+
+          case 56:
+            _bookData = _context2.sent;
+            _updatedBookData = {
+              author: _bookData.author,
+              title: _bookData.title,
+              image: _bookData.image,
+              quantity: _bookData.quantity + body.quantity,
+              price: _bookData.price,
+              description: _bookData.description
+            };
+            _context2.next = 60;
+            return _book2["default"].findByIdAndUpdate(_idOfBookToUpdate, _updatedBookData, {
+              "new": true
+            });
+
+          case 60:
+            if (!(_data2.total === 0)) {
+              _context2.next = 64;
+              break;
+            }
+
+            _context2.next = 63;
+            return _cart["default"].findByIdAndDelete(cartData._id);
+
+          case 63:
+            return _context2.abrupt("return", 'The cart is empty.');
+
+          case 64:
+            return _context2.abrupt("return", _data2);
+
+          case 65:
+            _context2.next = 70;
+            break;
+
+          case 67:
+            _context2.prev = 67;
+            _context2.t0 = _context2["catch"](0);
+            return _context2.abrupt("return", 'Cannot remove book from cart');
+
+          case 70:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, null, [[0, 67]]);
+  }));
+
+  return function removeBookFromCart(_x2) {
+    return _ref2.apply(this, arguments);
+  };
+}();
+
+exports.removeBookFromCart = removeBookFromCart;

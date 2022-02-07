@@ -25,6 +25,8 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 var cartRouter = _express["default"].Router(); //route to add book to cart
 
 
-cartRouter.post('/:_id', _auth.userAuth, _cart2.newCartValidator, cartController.addToCart);
+cartRouter.post('/:_id', _auth.userAuth, _cart2.newCartValidator, cartController.addToCart); //route to remove book from cart
+
+cartRouter["delete"]('/', _auth.userAuth, cartController.removeBookFromCart);
 var _default = cartRouter;
 exports["default"] = _default;

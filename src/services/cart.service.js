@@ -1,16 +1,21 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
 import Cart from '../models/cart.model';
 import Book from '../models/book.model';
-
+/**
+ * Service For Add To Cart
+ * @param {object} cart cart object 
+ * @returns 
+ */
 export const addToCart = async (cart) => {
   try {
     const bookData = await Book.findById({ _id: cart.bookId });
-    if (bookData.quantity===0) {
-      return `${bookData.title} is currently out of stock, please come back later.`
-    }
-    else if (cart.quantity > bookData.quantity) {
+    if (bookData.quantity === 0) {
+      return `${bookData.title} is currently out of stock, please come back later.`;
+    } else if (cart.quantity > bookData.quantity) {
       return `Please select quantity less than ${bookData.quantity}.`;
     } else {
       const checkCart = await Cart.findOne();
@@ -21,36 +26,36 @@ export const addToCart = async (cart) => {
         //Price of books for the quantity
         const bookPrice = cart.quantity * bookData.price;
         //Total Price of books in the cart
-        let priceArray = checkCart.prices
+        let priceArray = checkCart.prices;
         priceArray.push(bookPrice);
         let totalPrice = 0;
-        for (let i = 0; i<= priceArray.length-1; i++){
-          totalPrice = totalPrice + priceArray[i]
+        for (let i = 0; i <= priceArray.length - 1; i++) {
+          totalPrice = totalPrice + priceArray[i];
         }
         const finalPrice = totalPrice;
         //Object
         const data = {
           userId: cart.userId,
-          bookId: [...checkCart.bookId,cart.bookId],
-          bookName:[...checkCart.bookName, bookData.title],
-          quantityPerBook:[...checkCart.quantityPerBook, cart.quantity],
+          bookId: [...checkCart.bookId, cart.bookId],
+          bookName: [...checkCart.bookName, bookData.title],
+          quantityPerBook: [...checkCart.quantityPerBook, cart.quantity],
           totalQuantity: finalQuantity,
           prices: [...checkCart.prices],
-          total:finalPrice,
+          total: finalPrice,
           isPurchased: false
         };
         //Mongoose query to update the cart
-        const book = await Cart.findByIdAndUpdate({_id:checkCart._id}, data, {new: true});
+        const book = await Cart.findByIdAndUpdate({ _id: checkCart._id }, data, { new: true });
         //Update The Book Quantity In The Inventory
         const updatedData = {
           author: bookData.author,
           title: bookData.title,
           image: bookData.image,
-          quantity: (bookData.quantity-cart.quantity),
+          quantity: bookData.quantity - cart.quantity,
           price: bookData.price,
           description: bookData.description
         };
-        await Book.findByIdAndUpdate(bookData._id, updatedData, {new: true});
+        await Book.findByIdAndUpdate(bookData._id, updatedData, { new: true });
         return book;
       } else {
         //Price of books for the quantity
@@ -59,9 +64,9 @@ export const addToCart = async (cart) => {
         const data = {
           userId: cart.userId,
           bookId: [cart.bookId],
-          bookName:[bookData.title],
-          quantityPerBook:[cart.quantity],
-          totalQuantity:cart.quantity,
+          bookName: [bookData.title],
+          quantityPerBook: [cart.quantity],
+          totalQuantity: cart.quantity,
           prices: [bookPrice],
           total: bookPrice,
           isPurchased: false
@@ -73,15 +78,135 @@ export const addToCart = async (cart) => {
           author: bookData.author,
           title: bookData.title,
           image: bookData.image,
-          quantity: (bookData.quantity-cart.quantity),
+          quantity: bookData.quantity - cart.quantity,
           price: bookData.price,
           description: bookData.description
         };
-        await Book.findByIdAndUpdate(bookData._id, updatedData, {new: true});
+        await Book.findByIdAndUpdate(bookData._id, updatedData, { new: true });
         return book;
       }
     }
   } catch (error) {
     throw new Error(`Cannot add the book to cart!`);
+  }
+};
+
+/**
+ * Service for Remove From Cart
+ * @param {object} body - body object
+ * @returns 
+ */
+export const removeBookFromCart = async (body) => {
+  try {
+    const cartData = await Cart.findOne();
+    if (!cartData) {
+      return 'Cart is empty.';
+    } else {
+      //Cloning the arrays
+      const BookNameArray = [...cartData.bookName];
+      const IdArray = [...cartData.bookId];
+      const QtyArray = [...cartData.quantityPerBook];
+      const PricesArray = [...cartData.prices];
+
+      //Getting The Index 
+      const index = BookNameArray.indexOf(body.title);
+      const currentQty = cartData.quantityPerBook[index] - body.quantity;
+
+      if (cartData.quantityPerBook[index] - body.quantity !== 0) {
+
+        BookNameArray[index] = body.title;
+        IdArray[index] = cartData.bookId[index];
+        QtyArray[index] = currentQty;
+        PricesArray[index] = (cartData.prices[index] / cartData.quantityPerBook[index]) * currentQty;
+
+        cartData.totalQuantity = cartData.totalQuantity - body.quantity;
+
+        let totalPrice = 0;
+        for (let i = 0; i <= PricesArray.length - 1; i++) {
+          totalPrice = totalPrice + PricesArray[i];
+        }
+        const finalPrice = totalPrice;
+
+        const updatedCartData = {
+          userId: body.userId,
+          bookId: IdArray,
+          bookName: BookNameArray,
+          quantityPerBook: QtyArray,
+          totalQuantity: cartData.totalQuantity,
+          prices: PricesArray,
+          total: finalPrice,
+          isPurchased: false
+        };
+
+        const data = await Cart.findByIdAndUpdate(cartData._id, updatedCartData, { new: true });
+
+        const idOfBookToUpdate = cartData.bookId[index];
+
+        const bookData = await Book.findById({ _id: idOfBookToUpdate });
+
+        const updatedBookData = {
+          author: bookData.author,
+          title: bookData.title,
+          image: bookData.image,
+          quantity: bookData.quantity + body.quantity,
+          price: bookData.price,
+          description: bookData.description
+        };
+
+        await Book.findByIdAndUpdate(idOfBookToUpdate, updatedBookData, { new: true });
+
+        if (data.total === 0) {
+          await Cart.findByIdAndDelete(cartData._id);
+          return 'The cart is empty.';
+        }
+        return data;
+      } else {
+        const idOfBookToUpdate = cartData.bookId[index];
+
+        BookNameArray.splice(index, 1);
+        IdArray.splice(index, 1);
+        QtyArray.splice(index, 1);
+        PricesArray.splice(index, 1);
+        cartData.totalQuantity = cartData.totalQuantity - body.quantity;
+        let totalPrice = 0;
+        for (let i = 0; i <= PricesArray.length - 1; i++) {
+          totalPrice = totalPrice + PricesArray[i];
+        }
+        const finalPrice = totalPrice;
+
+        const updatedCartData = {
+          userId: body.userId,
+          bookId: IdArray,
+          bookName: BookNameArray,
+          quantityPerBook: QtyArray,
+          totalQuantity: cartData.totalQuantity,
+          prices: PricesArray,
+          total: finalPrice,
+          isPurchased: false
+        };
+
+        const data = await Cart.findByIdAndUpdate(cartData._id, updatedCartData, { new: true });
+        
+        const bookData = await Book.findById({ _id: idOfBookToUpdate });
+
+        const updatedBookData = {
+          author: bookData.author,
+          title: bookData.title,
+          image: bookData.image,
+          quantity: bookData.quantity + body.quantity,
+          price: bookData.price,
+          description: bookData.description
+        };
+
+        await Book.findByIdAndUpdate(idOfBookToUpdate, updatedBookData, { new: true });
+        if (data.total === 0) {
+          await Cart.findByIdAndDelete(cartData._id);
+          return 'The cart is empty.';
+        }
+        return data;
+      }
+    }
+  } catch (error) {
+    return 'Cannot remove book from cart';
   }
 };

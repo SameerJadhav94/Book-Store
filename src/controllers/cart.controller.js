@@ -18,3 +18,21 @@ export const addToCart = async (req, res, next) => {
     next(error);
   }
 };
+
+export const removeBookFromCart = async (req, res, next) => {
+  try {
+    const bookData = {
+      userId: req.user._id,
+      title: req.body.title,
+      quantity: req.body.quantity
+    }
+    const data = await CartService.removeBookFromCart(bookData);
+    res.status(HttpStatus.OK).json({
+      code: HttpStatus.OK,
+      data: data,
+      message: `Your Book has been removed from cart.`
+    });
+  } catch (err) {
+    next(err);
+  }
+};
