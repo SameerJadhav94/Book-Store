@@ -228,8 +228,16 @@ var removeBookFromCart = /*#__PURE__*/function () {
             index = BookNameArray.indexOf(body.title);
             currentQty = cartData.quantityPerBook[index] - body.quantity;
 
+            if (!(body.quantity > cartData.quantityPerBook[index])) {
+              _context2.next = 18;
+              break;
+            }
+
+            return _context2.abrupt("return", 'Invalid quantity.');
+
+          case 18:
             if (!(cartData.quantityPerBook[index] - body.quantity !== 0)) {
-              _context2.next = 41;
+              _context2.next = 45;
               break;
             }
 
@@ -255,20 +263,20 @@ var removeBookFromCart = /*#__PURE__*/function () {
               total: finalPrice,
               isPurchased: false
             };
-            _context2.next = 26;
+            _context2.next = 30;
             return _cart["default"].findByIdAndUpdate(cartData._id, updatedCartData, {
               "new": true
             });
 
-          case 26:
+          case 30:
             data = _context2.sent;
             idOfBookToUpdate = cartData.bookId[index];
-            _context2.next = 30;
+            _context2.next = 34;
             return _book2["default"].findById({
               _id: idOfBookToUpdate
             });
 
-          case 30:
+          case 34:
             bookData = _context2.sent;
             updatedBookData = {
               author: bookData.author,
@@ -278,27 +286,27 @@ var removeBookFromCart = /*#__PURE__*/function () {
               price: bookData.price,
               description: bookData.description
             };
-            _context2.next = 34;
+            _context2.next = 38;
             return _book2["default"].findByIdAndUpdate(idOfBookToUpdate, updatedBookData, {
               "new": true
             });
 
-          case 34:
+          case 38:
             if (!(data.total === 0)) {
-              _context2.next = 38;
+              _context2.next = 42;
               break;
             }
 
-            _context2.next = 37;
+            _context2.next = 41;
             return _cart["default"].findByIdAndDelete(cartData._id);
 
-          case 37:
+          case 41:
             return _context2.abrupt("return", 'The cart is empty.');
 
-          case 38:
+          case 42:
             return _context2.abrupt("return", data);
 
-          case 41:
+          case 45:
             _idOfBookToUpdate = cartData.bookId[index]; //Deleting Data from Particular Index
 
             BookNameArray.splice(index, 1);
@@ -325,19 +333,19 @@ var removeBookFromCart = /*#__PURE__*/function () {
               total: _finalPrice,
               isPurchased: false
             };
-            _context2.next = 53;
+            _context2.next = 57;
             return _cart["default"].findByIdAndUpdate(cartData._id, _updatedCartData, {
               "new": true
             });
 
-          case 53:
+          case 57:
             _data2 = _context2.sent;
-            _context2.next = 56;
+            _context2.next = 60;
             return _book2["default"].findById({
               _id: _idOfBookToUpdate
             });
 
-          case 56:
+          case 60:
             _bookData = _context2.sent;
             //Object To Update Main Inventory
             _updatedBookData = {
@@ -348,41 +356,41 @@ var removeBookFromCart = /*#__PURE__*/function () {
               price: _bookData.price,
               description: _bookData.description
             };
-            _context2.next = 60;
+            _context2.next = 64;
             return _book2["default"].findByIdAndUpdate(_idOfBookToUpdate, _updatedBookData, {
               "new": true
             });
 
-          case 60:
+          case 64:
             if (!(_data2.total === 0)) {
-              _context2.next = 64;
+              _context2.next = 68;
               break;
             }
 
-            _context2.next = 63;
+            _context2.next = 67;
             return _cart["default"].findByIdAndDelete(cartData._id);
 
-          case 63:
+          case 67:
             return _context2.abrupt("return", 'The cart is empty.');
 
-          case 64:
+          case 68:
             return _context2.abrupt("return", _data2);
 
-          case 65:
-            _context2.next = 70;
+          case 69:
+            _context2.next = 74;
             break;
 
-          case 67:
-            _context2.prev = 67;
+          case 71:
+            _context2.prev = 71;
             _context2.t0 = _context2["catch"](0);
             return _context2.abrupt("return", 'Cannot remove book from cart');
 
-          case 70:
+          case 74:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[0, 67]]);
+    }, _callee2, null, [[0, 71]]);
   }));
 
   return function removeBookFromCart(_x2) {

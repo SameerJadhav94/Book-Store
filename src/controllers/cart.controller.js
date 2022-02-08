@@ -32,6 +32,11 @@ export const removeBookFromCart = async (req, res, next) => {
         code: HttpStatus.BAD_REQUEST,
         message: 'Your Cart Does Not Have Any Books.'
       })
+    }else if(data==='Invalid quantity.'){
+      res.status(HttpStatus.BAD_REQUEST).json({
+        code: HttpStatus.BAD_REQUEST,
+        message: 'Select Proper Quantity.'
+      })
     }
     else if(data==='The cart is empty.'){
       res.status(HttpStatus.OK).json({

@@ -111,8 +111,10 @@ export const removeBookFromCart = async (body) => {
       //Getting The Index 
       const index = BookNameArray.indexOf(body.title);
       const currentQty = cartData.quantityPerBook[index] - body.quantity;
-
-      if (cartData.quantityPerBook[index] - body.quantity !== 0) {
+      if (body.quantity>cartData.quantityPerBook[index]) {
+        return 'Invalid quantity.'
+      }
+      else if (cartData.quantityPerBook[index] - body.quantity !== 0) {
 
         BookNameArray[index] = body.title;
         IdArray[index] = cartData.bookId[index];
@@ -154,7 +156,7 @@ export const removeBookFromCart = async (body) => {
         };
 
         await Book.findByIdAndUpdate(idOfBookToUpdate, updatedBookData, { new: true });
-
+        //Delete The Document If The Quantity In The Cart Is Zero
         if (data.total === 0) {
           await Cart.findByIdAndDelete(cartData._id);
           return 'The cart is empty.';

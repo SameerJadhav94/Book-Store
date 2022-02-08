@@ -91,6 +91,11 @@ var removeBookFromCart = /*#__PURE__*/function () {
                 code: _httpStatusCodes["default"].BAD_REQUEST,
                 message: 'Your Cart Does Not Have Any Books.'
               });
+            } else if (data === 'Invalid quantity.') {
+              res.status(_httpStatusCodes["default"].BAD_REQUEST).json({
+                code: _httpStatusCodes["default"].BAD_REQUEST,
+                message: 'Select Proper Quantity.'
+              });
             } else if (data === 'The cart is empty.') {
               res.status(_httpStatusCodes["default"].OK).json({
                 code: _httpStatusCodes["default"].OK,

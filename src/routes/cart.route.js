@@ -9,6 +9,6 @@ const cartRouter = express.Router();
 //route to add book to cart
 cartRouter.post('/:_id', userAuth, newCartValidator, cartController.addToCart);
 //route to remove book from cart
-cartRouter.delete('/', userAuth, cartController.removeBookFromCart);
+cartRouter.put('/', userAuth, cartController.removeBookFromCart);
 
 export default cartRouter;

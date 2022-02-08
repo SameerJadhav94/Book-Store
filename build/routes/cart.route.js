@@ -27,6 +27,6 @@ var cartRouter = _express["default"].Router(); //route to add book to cart
 
 cartRouter.post('/:_id', _auth.userAuth, _cart2.newCartValidator, cartController.addToCart); //route to remove book from cart
 
-cartRouter["delete"]('/', _auth.userAuth, cartController.removeBookFromCart);
+cartRouter.put('/', _auth.userAuth, cartController.removeBookFromCart);
 var _default = cartRouter;
 exports["default"] = _default;
