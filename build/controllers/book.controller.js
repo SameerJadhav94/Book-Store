@@ -7,7 +7,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateBookById = exports.getBookById = exports.getBook = exports.deleteBookById = exports.addBook = void 0;
+exports.updateBookById = exports.searchBook = exports.getBookById = exports.getBook = exports.deleteBookById = exports.addBook = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -290,3 +290,47 @@ var deleteBookById = /*#__PURE__*/function () {
 }();
 
 exports.deleteBookById = deleteBookById;
+
+var searchBook = /*#__PURE__*/function () {
+  var _ref6 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee6(req, res, next) {
+    var bookName, data;
+    return _regenerator["default"].wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            _context6.prev = 0;
+            bookName = {
+              title: req.body.title
+            };
+            _context6.next = 4;
+            return BookService.searchBook(bookName);
+
+          case 4:
+            data = _context6.sent;
+            res.status(_httpStatusCodes["default"].OK).json({
+              code: _httpStatusCodes["default"].OK,
+              data: data,
+              message: "Your Books..."
+            });
+            _context6.next = 11;
+            break;
+
+          case 8:
+            _context6.prev = 8;
+            _context6.t0 = _context6["catch"](0);
+            next(_context6.t0);
+
+          case 11:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6, null, [[0, 8]]);
+  }));
+
+  return function searchBook(_x16, _x17, _x18) {
+    return _ref6.apply(this, arguments);
+  };
+}();
+
+exports.searchBook = searchBook;

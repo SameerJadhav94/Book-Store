@@ -7,8 +7,8 @@ import Cart from '../models/cart.model';
 import Book from '../models/book.model';
 /**
  * Service For Add To Cart
- * @param {object} cart cart object 
- * @returns 
+ * @param {object} cart cart object
+ * @returns
  */
 export const addToCart = async (cart) => {
   try {
@@ -94,7 +94,7 @@ export const addToCart = async (cart) => {
 /**
  * Service for Remove From Cart
  * @param {object} body - body object
- * @returns 
+ * @returns
  */
 export const removeBookFromCart = async (body) => {
   try {
@@ -108,14 +108,12 @@ export const removeBookFromCart = async (body) => {
       const QtyArray = [...cartData.quantityPerBook];
       const PricesArray = [...cartData.prices];
 
-      //Getting The Index 
+      //Getting The Index
       const index = BookNameArray.indexOf(body.title);
       const currentQty = cartData.quantityPerBook[index] - body.quantity;
-      if (body.quantity>cartData.quantityPerBook[index] || body.quantity>cartData.totalQuantity) {
-        return 'Invalid quantity.'
-      }
-      else if (cartData.quantityPerBook[index] - body.quantity !== 0) {
-
+      if (body.quantity > cartData.quantityPerBook[index] || body.quantity > cartData.totalQuantity) {
+        return 'Invalid quantity.';
+      } else if (cartData.quantityPerBook[index] - body.quantity !== 0) {
         BookNameArray[index] = body.title;
         IdArray[index] = cartData.bookId[index];
         QtyArray[index] = currentQty;
@@ -184,7 +182,7 @@ export const removeBookFromCart = async (body) => {
         };
 
         const data = await Cart.findByIdAndUpdate(cartData._id, updatedCartData, { new: true });
-        
+
         const bookData = await Book.findById({ _id: idOfBookToUpdate });
         //Object To Update Main Inventory
         const updatedBookData = {
@@ -202,5 +200,34 @@ export const removeBookFromCart = async (body) => {
     }
   } catch (error) {
     return 'Cannot remove book from cart';
+  }
+};
+
+/**
+ * Service for confirm booking
+ * @param {id} id cart's id
+ * @returns 
+ */
+export const confirmBooking = async (id) => {
+  try {
+    const checkCart = await Cart.findById(id);
+    if (checkCart.totalQuantity === 0) {
+      return 'Add The Book.';
+    }else{
+      const data = {
+        userId: checkCart.userId,
+        bookId: [],
+        bookName: [],
+        quantityPerBook: [],
+        totalQuantity: 0,
+        prices: [],
+        total: 0,
+        isPurchased: true
+      };
+      const checkout = await Cart.findByIdAndUpdate(id, data, {new:true});
+      return checkout;
+    }
+  } catch (error) {
+    return 'Cannot check out your order.';
   }
 };

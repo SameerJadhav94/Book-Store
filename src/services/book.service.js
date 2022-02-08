@@ -11,19 +11,19 @@ export const addBook = async (body) => {
 
 //get book
 export const getBook = async () => {
-  const data = await Book.find().sort({ updatedAt: -1 })
+  const data = await Book.find().sort({ updatedAt: -1 });
   return data;
 };
 
 //get book by id
 export const getBookById = async (id) => {
-  const data = await Book.findById(id)
+  const data = await Book.findById(id);
   return data;
 };
 
 //update book by id
 export const updateBookById = async (id, body) => {
-  const data = await Book.findByIdAndUpdate(id, body, {new: true});
+  const data = await Book.findByIdAndUpdate(id, body, { new: true });
   return data;
 };
 
@@ -31,4 +31,16 @@ export const updateBookById = async (id, body) => {
 export const deleteBookById = async (id) => {
   const data = await Book.findByIdAndDelete(id);
   return data;
+};
+
+//search book
+export const searchBook = async (bookName) => {
+  try {
+    const data = await Book.find({
+      $or: [{ title: { $regex: bookName.title } }]
+    });
+    return data;
+  } catch (err) {
+    return 'Problem Occured';
+  }
 };

@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateBookById = exports.getBookById = exports.getBook = exports.deleteBookById = exports.addBook = void 0;
+exports.updateBookById = exports.searchBook = exports.getBookById = exports.getBook = exports.deleteBookById = exports.addBook = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -168,6 +168,48 @@ var deleteBookById = /*#__PURE__*/function () {
   return function deleteBookById(_x5) {
     return _ref5.apply(this, arguments);
   };
-}();
+}(); //search book
+
 
 exports.deleteBookById = deleteBookById;
+
+var searchBook = /*#__PURE__*/function () {
+  var _ref6 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee6(bookName) {
+    var data;
+    return _regenerator["default"].wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            _context6.prev = 0;
+            _context6.next = 3;
+            return _book["default"].find({
+              $or: [{
+                title: {
+                  $regex: bookName.title
+                }
+              }]
+            });
+
+          case 3:
+            data = _context6.sent;
+            return _context6.abrupt("return", data);
+
+          case 7:
+            _context6.prev = 7;
+            _context6.t0 = _context6["catch"](0);
+            return _context6.abrupt("return", 'Problem Occured');
+
+          case 10:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6, null, [[0, 7]]);
+  }));
+
+  return function searchBook(_x6) {
+    return _ref6.apply(this, arguments);
+  };
+}();
+
+exports.searchBook = searchBook;

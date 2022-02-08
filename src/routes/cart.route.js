@@ -10,5 +10,7 @@ const cartRouter = express.Router();
 cartRouter.post('/:_id', userAuth, newCartValidator, cartController.addToCart);
 //route to remove book from cart
 cartRouter.put('/', userAuth, cartController.removeBookFromCart);
+//route to confirm booking
+cartRouter.put('/:_id', userAuth, cartController.confirmBooking);
 
 export default cartRouter;

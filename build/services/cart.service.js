@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.removeBookFromCart = exports.addToCart = void 0;
+exports.removeBookFromCart = exports.confirmBooking = exports.addToCart = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -29,8 +29,8 @@ var _book2 = _interopRequireDefault(require("../models/book.model"));
 
 /**
  * Service For Add To Cart
- * @param {object} cart cart object 
- * @returns 
+ * @param {object} cart cart object
+ * @returns
  */
 var addToCart = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(cart) {
@@ -190,7 +190,7 @@ var addToCart = /*#__PURE__*/function () {
 /**
  * Service for Remove From Cart
  * @param {object} body - body object
- * @returns 
+ * @returns
  */
 
 
@@ -223,7 +223,7 @@ var removeBookFromCart = /*#__PURE__*/function () {
             BookNameArray = (0, _toConsumableArray2["default"])(cartData.bookName);
             IdArray = (0, _toConsumableArray2["default"])(cartData.bookId);
             QtyArray = (0, _toConsumableArray2["default"])(cartData.quantityPerBook);
-            PricesArray = (0, _toConsumableArray2["default"])(cartData.prices); //Getting The Index 
+            PricesArray = (0, _toConsumableArray2["default"])(cartData.prices); //Getting The Index
 
             index = BookNameArray.indexOf(body.title);
             currentQty = cartData.quantityPerBook[index] - body.quantity;
@@ -373,5 +373,76 @@ var removeBookFromCart = /*#__PURE__*/function () {
     return _ref2.apply(this, arguments);
   };
 }();
+/**
+ * Service for confirm booking
+ * @param {id} id cart's id
+ * @returns 
+ */
+
 
 exports.removeBookFromCart = removeBookFromCart;
+
+var confirmBooking = /*#__PURE__*/function () {
+  var _ref3 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3(id) {
+    var checkCart, data, checkout;
+    return _regenerator["default"].wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.prev = 0;
+            _context3.next = 3;
+            return _cart["default"].findById(id);
+
+          case 3:
+            checkCart = _context3.sent;
+
+            if (!(checkCart.totalQuantity === 0)) {
+              _context3.next = 8;
+              break;
+            }
+
+            return _context3.abrupt("return", 'Add The Book.');
+
+          case 8:
+            data = {
+              userId: checkCart.userId,
+              bookId: [],
+              bookName: [],
+              quantityPerBook: [],
+              totalQuantity: 0,
+              prices: [],
+              total: 0,
+              isPurchased: true
+            };
+            _context3.next = 11;
+            return _cart["default"].findByIdAndUpdate(id, data, {
+              "new": true
+            });
+
+          case 11:
+            checkout = _context3.sent;
+            return _context3.abrupt("return", checkout);
+
+          case 13:
+            _context3.next = 18;
+            break;
+
+          case 15:
+            _context3.prev = 15;
+            _context3.t0 = _context3["catch"](0);
+            return _context3.abrupt("return", 'Cannot check out your order.');
+
+          case 18:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3, null, [[0, 15]]);
+  }));
+
+  return function confirmBooking(_x3) {
+    return _ref3.apply(this, arguments);
+  };
+}();
+
+exports.confirmBooking = confirmBooking;

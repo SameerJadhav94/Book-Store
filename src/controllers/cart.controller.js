@@ -54,3 +54,27 @@ export const removeBookFromCart = async (req, res, next) => {
     next(err);
   }
 };
+
+export const confirmBooking = async (req, res, next) => {
+  try {
+    const data = await CartService.confirmBooking(req.params._id);
+    if (data==='Add The Book.') {
+      res.status(HttpStatus.BAD_REQUEST).json({
+        code: HttpStatus.BAD_REQUEST,
+        message: 'Add books first to checkout.'
+      });
+    }else if(data==='Cannot check out your order.'){
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: 'Problem occured while checking out your order.'
+      });
+    }else{
+      res.status(HttpStatus.CREATED).json({
+        code: HttpStatus.CREATED,
+        data: data
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};

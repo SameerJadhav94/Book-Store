@@ -7,7 +7,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.removeBookFromCart = exports.addToCart = void 0;
+exports.removeBookFromCart = exports.confirmBooking = exports.addToCart = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -96,11 +96,6 @@ var removeBookFromCart = /*#__PURE__*/function () {
                 code: _httpStatusCodes["default"].BAD_REQUEST,
                 message: 'Select Proper Quantity.'
               });
-            } else if (data === 'The cart is empty.') {
-              res.status(_httpStatusCodes["default"].OK).json({
-                code: _httpStatusCodes["default"].OK,
-                message: 'All The Books Has Been Removed From The Cart.'
-              });
             } else if (data === 'Cannot remove book from cart') {
               res.status(_httpStatusCodes["default"].INTERNAL_SERVER_ERROR).json({
                 code: _httpStatusCodes["default"].INTERNAL_SERVER_ERROR,
@@ -136,3 +131,57 @@ var removeBookFromCart = /*#__PURE__*/function () {
 }();
 
 exports.removeBookFromCart = removeBookFromCart;
+
+var confirmBooking = /*#__PURE__*/function () {
+  var _ref3 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3(req, res, next) {
+    var data;
+    return _regenerator["default"].wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.prev = 0;
+            _context3.next = 3;
+            return CartService.confirmBooking(req.params._id);
+
+          case 3:
+            data = _context3.sent;
+
+            if (data === 'Add The Book.') {
+              res.status(_httpStatusCodes["default"].BAD_REQUEST).json({
+                code: _httpStatusCodes["default"].BAD_REQUEST,
+                message: 'Add books first to checkout.'
+              });
+            } else if (data === 'Cannot check out your order.') {
+              res.status(_httpStatusCodes["default"].INTERNAL_SERVER_ERROR).json({
+                code: _httpStatusCodes["default"].INTERNAL_SERVER_ERROR,
+                message: 'Problem occured while checking out your order.'
+              });
+            } else {
+              res.status(_httpStatusCodes["default"].CREATED).json({
+                code: _httpStatusCodes["default"].CREATED,
+                data: data
+              });
+            }
+
+            _context3.next = 10;
+            break;
+
+          case 7:
+            _context3.prev = 7;
+            _context3.t0 = _context3["catch"](0);
+            next(_context3.t0);
+
+          case 10:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3, null, [[0, 7]]);
+  }));
+
+  return function confirmBooking(_x7, _x8, _x9) {
+    return _ref3.apply(this, arguments);
+  };
+}();
+
+exports.confirmBooking = confirmBooking;

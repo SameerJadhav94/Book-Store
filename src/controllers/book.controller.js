@@ -3,7 +3,7 @@
 /* eslint-disable prettier/prettier */
 import HttpStatus from 'http-status-codes';
 import * as BookService from '../services/book.service';
-import Book from '../models/book.model'
+import Book from '../models/book.model';
 import logger from '../config/logger';
 
 // Controller for add book
@@ -91,7 +91,7 @@ export const updateBookById = async (req, res, next) => {
       price: req.body.price,
       description: req.body.description
     };
-    const data = await BookService.updateBookById(req.params._id,bookData);
+    const data = await BookService.updateBookById(req.params._id, bookData);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
       data: data,
@@ -116,6 +116,28 @@ export const deleteBookById = async (req, res, next) => {
       code: HttpStatus.OK,
       data: data,
       message: `Your Book: "${data.title}" has been deleted successfully.`
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const searchBook = async (req, res, next) => {
+  try {
+    const bookName = {
+      title: req.body.title,
+    }
+    const data = await BookService.searchBook(bookName);
+    if (data==='Problem Occured') {
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: `Error occurred while searching for results.`
+      });
+    }
+    res.status(HttpStatus.OK).json({
+      code: HttpStatus.OK,
+      data: data,
+      message: `Here are results matching your search...`
     });
   } catch (err) {
     next(err);
