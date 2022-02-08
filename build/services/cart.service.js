@@ -228,7 +228,7 @@ var removeBookFromCart = /*#__PURE__*/function () {
             index = BookNameArray.indexOf(body.title);
             currentQty = cartData.quantityPerBook[index] - body.quantity;
 
-            if (!(body.quantity > cartData.quantityPerBook[index])) {
+            if (!(body.quantity > cartData.quantityPerBook[index] || body.quantity > cartData.totalQuantity)) {
               _context2.next = 18;
               break;
             }
@@ -237,7 +237,7 @@ var removeBookFromCart = /*#__PURE__*/function () {
 
           case 18:
             if (!(cartData.quantityPerBook[index] - body.quantity !== 0)) {
-              _context2.next = 45;
+              _context2.next = 41;
               break;
             }
 
@@ -292,21 +292,9 @@ var removeBookFromCart = /*#__PURE__*/function () {
             });
 
           case 38:
-            if (!(data.total === 0)) {
-              _context2.next = 42;
-              break;
-            }
-
-            _context2.next = 41;
-            return _cart["default"].findByIdAndDelete(cartData._id);
-
-          case 41:
-            return _context2.abrupt("return", 'The cart is empty.');
-
-          case 42:
             return _context2.abrupt("return", data);
 
-          case 45:
+          case 41:
             _idOfBookToUpdate = cartData.bookId[index]; //Deleting Data from Particular Index
 
             BookNameArray.splice(index, 1);
@@ -333,19 +321,19 @@ var removeBookFromCart = /*#__PURE__*/function () {
               total: _finalPrice,
               isPurchased: false
             };
-            _context2.next = 57;
+            _context2.next = 53;
             return _cart["default"].findByIdAndUpdate(cartData._id, _updatedCartData, {
               "new": true
             });
 
-          case 57:
+          case 53:
             _data2 = _context2.sent;
-            _context2.next = 60;
+            _context2.next = 56;
             return _book2["default"].findById({
               _id: _idOfBookToUpdate
             });
 
-          case 60:
+          case 56:
             _bookData = _context2.sent;
             //Object To Update Main Inventory
             _updatedBookData = {
@@ -356,41 +344,29 @@ var removeBookFromCart = /*#__PURE__*/function () {
               price: _bookData.price,
               description: _bookData.description
             };
-            _context2.next = 64;
+            _context2.next = 60;
             return _book2["default"].findByIdAndUpdate(_idOfBookToUpdate, _updatedBookData, {
               "new": true
             });
 
-          case 64:
-            if (!(_data2.total === 0)) {
-              _context2.next = 68;
-              break;
-            }
-
-            _context2.next = 67;
-            return _cart["default"].findByIdAndDelete(cartData._id);
-
-          case 67:
-            return _context2.abrupt("return", 'The cart is empty.');
-
-          case 68:
+          case 60:
             return _context2.abrupt("return", _data2);
 
-          case 69:
-            _context2.next = 74;
+          case 61:
+            _context2.next = 66;
             break;
 
-          case 71:
-            _context2.prev = 71;
+          case 63:
+            _context2.prev = 63;
             _context2.t0 = _context2["catch"](0);
             return _context2.abrupt("return", 'Cannot remove book from cart');
 
-          case 74:
+          case 66:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[0, 71]]);
+    }, _callee2, null, [[0, 63]]);
   }));
 
   return function removeBookFromCart(_x2) {

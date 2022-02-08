@@ -38,12 +38,7 @@ export const removeBookFromCart = async (req, res, next) => {
         message: 'Select Proper Quantity.'
       })
     }
-    else if(data==='The cart is empty.'){
-      res.status(HttpStatus.OK).json({
-        code: HttpStatus.OK,
-        message: 'All The Books Has Been Removed From The Cart.'
-      });
-    }else if(data==='Cannot remove book from cart'){
+    else if(data==='Cannot remove book from cart'){
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
         code: HttpStatus.INTERNAL_SERVER_ERROR,
         message: 'Problem occured while removing book from cart.'

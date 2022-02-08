@@ -111,7 +111,7 @@ export const removeBookFromCart = async (body) => {
       //Getting The Index 
       const index = BookNameArray.indexOf(body.title);
       const currentQty = cartData.quantityPerBook[index] - body.quantity;
-      if (body.quantity>cartData.quantityPerBook[index]) {
+      if (body.quantity>cartData.quantityPerBook[index] || body.quantity>cartData.totalQuantity) {
         return 'Invalid quantity.'
       }
       else if (cartData.quantityPerBook[index] - body.quantity !== 0) {
@@ -156,11 +156,6 @@ export const removeBookFromCart = async (body) => {
         };
 
         await Book.findByIdAndUpdate(idOfBookToUpdate, updatedBookData, { new: true });
-        //Delete The Document If The Quantity In The Cart Is Zero
-        if (data.total === 0) {
-          await Cart.findByIdAndDelete(cartData._id);
-          return 'The cart is empty.';
-        }
         return data;
       } else {
         const idOfBookToUpdate = cartData.bookId[index];
@@ -202,11 +197,6 @@ export const removeBookFromCart = async (body) => {
         };
 
         await Book.findByIdAndUpdate(idOfBookToUpdate, updatedBookData, { new: true });
-        //Delete The Document If The Quantity In The Cart Is Zero
-        if (data.total === 0) {
-          await Cart.findByIdAndDelete(cartData._id);
-          return 'The cart is empty.';
-        }
         return data;
       }
     }
