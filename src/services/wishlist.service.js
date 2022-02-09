@@ -19,15 +19,15 @@ export const addToWishlist = async (id, List) => {
       List.books = [...listCheck.books, book];
       let flag = false;
       for (let index = 0; index < listCheck.books.length; index++) {
-        if (id===listCheck.books[index].bookId.toString()) {
-          flag = true
+        if (id === listCheck.books[index].bookId.toString()) {
+          flag = true;
         }
       }
-      if (flag===true) {
-        return 'Book Already Exist'
-      }else{
+      if (flag === true) {
+        return 'Book Already Exist';
+      } else {
         const data = await WishList.findByIdAndUpdate(listCheck._id, List, { new: true });
-      return data;
+        return data;
       }
     } else {
       const book = {
@@ -46,13 +46,13 @@ export const addToWishlist = async (id, List) => {
   }
 };
 
-export const removeFromWishList = async (id)=>{
-  try{
+export const removeFromWishList = async (id) => {
+  try {
     const wishlist = await WishList.findOne();
-    const updatedlist = await WishList.findByIdAndUpdate({_id:wishlist._id}, { $pull: { books: { bookId: id } } }, {new: true});
+    const updatedlist = await WishList.findByIdAndUpdate({ _id: wishlist._id }, { $pull: { books: { bookId: id } } }, { new: true });
     return updatedlist;
-  }catch (error){
+  } catch (error) {
     console.log(error);
-    return 'Cannot remove from wishlist'
+    return 'Cannot remove from wishlist';
   }
-}
+};

@@ -151,22 +151,20 @@ var removeFromWishList = /*#__PURE__*/function () {
 
           case 6:
             updatedlist = _context2.sent;
-            console.log(updatedlist); // console.log(wishlist);
-
             return _context2.abrupt("return", updatedlist);
 
-          case 11:
-            _context2.prev = 11;
+          case 10:
+            _context2.prev = 10;
             _context2.t0 = _context2["catch"](0);
             console.log(_context2.t0);
             return _context2.abrupt("return", 'Cannot remove from wishlist');
 
-          case 15:
+          case 14:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[0, 11]]);
+    }, _callee2, null, [[0, 10]]);
   }));
 
   return function removeFromWishList(_x3) {

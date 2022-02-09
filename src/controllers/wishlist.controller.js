@@ -33,11 +33,19 @@ export const addToWishlist = async (req, res, next) => {
 export const removeFromWishList = async (req, res, next) => {
   try {
     const data = await wishListService.removeFromWishList(req.params._id);
-    res.status(HttpStatus.OK).json({
-      code: HttpStatus.OK,
-      data: data,
-      message: `The Book has been removed from wish list!`
-    });
+    if (data === 'Cannot remove from wishlist') {
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        data: data,
+        message: `Error ocurred while removing books from wish list.`
+      });
+    } else {
+      res.status(HttpStatus.OK).json({
+        code: HttpStatus.OK,
+        data: data,
+        message: `The Book has been removed from wish list!`
+      });
+    }
   } catch (err) {
     next(err);
   }
