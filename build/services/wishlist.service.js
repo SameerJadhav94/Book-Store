@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addToWishlist = void 0;
+exports.removeFromWishList = exports.addToWishlist = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -122,3 +122,56 @@ var addToWishlist = /*#__PURE__*/function () {
 }();
 
 exports.addToWishlist = addToWishlist;
+
+var removeFromWishList = /*#__PURE__*/function () {
+  var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(id) {
+    var wishlist, updatedlist;
+    return _regenerator["default"].wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            _context2.next = 3;
+            return _wishlist["default"].findOne();
+
+          case 3:
+            wishlist = _context2.sent;
+            _context2.next = 6;
+            return _wishlist["default"].findByIdAndUpdate({
+              _id: wishlist._id
+            }, {
+              $pull: {
+                books: {
+                  bookId: id
+                }
+              }
+            }, {
+              "new": true
+            });
+
+          case 6:
+            updatedlist = _context2.sent;
+            console.log(updatedlist); // console.log(wishlist);
+
+            return _context2.abrupt("return", updatedlist);
+
+          case 11:
+            _context2.prev = 11;
+            _context2.t0 = _context2["catch"](0);
+            console.log(_context2.t0);
+            return _context2.abrupt("return", 'Cannot remove from wishlist');
+
+          case 15:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, null, [[0, 11]]);
+  }));
+
+  return function removeFromWishList(_x3) {
+    return _ref2.apply(this, arguments);
+  };
+}();
+
+exports.removeFromWishList = removeFromWishList;

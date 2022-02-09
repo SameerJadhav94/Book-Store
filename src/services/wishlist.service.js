@@ -45,3 +45,14 @@ export const addToWishlist = async (id, List) => {
     return 'Cannot add to wishlist';
   }
 };
+
+export const removeFromWishList = async (id)=>{
+  try{
+    const wishlist = await WishList.findOne();
+    const updatedlist = await WishList.findByIdAndUpdate({_id:wishlist._id}, { $pull: { books: { bookId: id } } }, {new: true});
+    return updatedlist;
+  }catch (error){
+    console.log(error);
+    return 'Cannot remove from wishlist'
+  }
+}
