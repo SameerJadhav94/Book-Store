@@ -42,7 +42,12 @@ var addToWishlist = /*#__PURE__*/function () {
             if (data === 'Book Already Exist') {
               res.status(_httpStatusCodes["default"].BAD_REQUEST).json({
                 code: _httpStatusCodes["default"].BAD_REQUEST,
-                message: "The Book is already in your wishlist"
+                message: "The Book is already in your wishlist."
+              });
+            } else if (data === 'Cannot add to wishlist') {
+              res.status(_httpStatusCodes["default"].INTERNAL_SERVER_ERROR).json({
+                code: _httpStatusCodes["default"].INTERNAL_SERVER_ERROR,
+                message: "Error ocurred while adding to list."
               });
             } else {
               res.status(_httpStatusCodes["default"].CREATED).json({

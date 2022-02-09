@@ -11,9 +11,15 @@ export const addToWishlist = async (req, res, next) => {
       if (data==='Book Already Exist') {
         res.status(HttpStatus.BAD_REQUEST).json({
           code: HttpStatus.BAD_REQUEST,
-          message: `The Book is already in your wishlist`
+          message: `The Book is already in your wishlist.`
         });
-      }else{
+      }else if(data==='Cannot add to wishlist'){
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+          code: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: `Error ocurred while adding to list.`
+        });
+      }
+      else{
         res.status(HttpStatus.CREATED).json({
           code: HttpStatus.CREATED,
           data: data,
