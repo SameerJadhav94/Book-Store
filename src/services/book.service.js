@@ -37,7 +37,7 @@ export const deleteBookById = async (id) => {
 export const searchBook = async (bookName) => {
   try {
     const data = await Book.find({
-      $or: [{ title: { $regex: bookName.title } }]
+      $or: [{ title: { $regex: bookName.title, $options: 'i' } }]
     });
     return data;
   } catch (err) {

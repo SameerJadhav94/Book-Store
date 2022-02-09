@@ -307,25 +307,33 @@ var searchBook = /*#__PURE__*/function () {
 
           case 4:
             data = _context6.sent;
+
+            if (data === 'Problem Occured') {
+              res.status(_httpStatusCodes["default"].INTERNAL_SERVER_ERROR).json({
+                code: _httpStatusCodes["default"].INTERNAL_SERVER_ERROR,
+                message: "Error occurred while searching for results."
+              });
+            }
+
             res.status(_httpStatusCodes["default"].OK).json({
               code: _httpStatusCodes["default"].OK,
               data: data,
-              message: "Your Books..."
+              message: "Here are results matching your search..."
             });
-            _context6.next = 11;
+            _context6.next = 12;
             break;
 
-          case 8:
-            _context6.prev = 8;
+          case 9:
+            _context6.prev = 9;
             _context6.t0 = _context6["catch"](0);
             next(_context6.t0);
 
-          case 11:
+          case 12:
           case "end":
             return _context6.stop();
         }
       }
-    }, _callee6, null, [[0, 8]]);
+    }, _callee6, null, [[0, 9]]);
   }));
 
   return function searchBook(_x16, _x17, _x18) {
