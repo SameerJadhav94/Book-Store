@@ -7,7 +7,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.removeBookFromCart = exports.confirmBooking = exports.addToCart = void 0;
+exports.viewCart = exports.removeBookFromCart = exports.confirmBooking = exports.addToCart = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -185,3 +185,56 @@ var confirmBooking = /*#__PURE__*/function () {
 }();
 
 exports.confirmBooking = confirmBooking;
+
+var viewCart = /*#__PURE__*/function () {
+  var _ref4 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(req, res, next) {
+    var id, data;
+    return _regenerator["default"].wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            _context4.prev = 0;
+            id = {
+              userId: req.user._id
+            };
+            _context4.next = 4;
+            return CartService.viewCart(id);
+
+          case 4:
+            data = _context4.sent;
+
+            if (data === 'Cannot view your cart') {
+              res.status(_httpStatusCodes["default"].INTERNAL_SERVER_ERROR).json({
+                code: _httpStatusCodes["default"].INTERNAL_SERVER_ERROR,
+                message: 'Problem occured while viewing your cart'
+              });
+            } else {
+              res.status(_httpStatusCodes["default"].OK).json({
+                code: _httpStatusCodes["default"].OK,
+                message: 'Your cart has....',
+                data: data
+              });
+            }
+
+            _context4.next = 11;
+            break;
+
+          case 8:
+            _context4.prev = 8;
+            _context4.t0 = _context4["catch"](0);
+            next(_context4.t0);
+
+          case 11:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4, null, [[0, 8]]);
+  }));
+
+  return function viewCart(_x10, _x11, _x12) {
+    return _ref4.apply(this, arguments);
+  };
+}();
+
+exports.viewCart = viewCart;

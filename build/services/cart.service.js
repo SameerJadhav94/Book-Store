@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.removeBookFromCart = exports.confirmBooking = exports.addToCart = void 0;
+exports.viewCart = exports.removeBookFromCart = exports.confirmBooking = exports.addToCart = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -16,6 +16,8 @@ var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/
 var _cart = _interopRequireDefault(require("../models/cart.model"));
 
 var _book2 = _interopRequireDefault(require("../models/book.model"));
+
+var _logger = _interopRequireDefault(require("../config/logger"));
 
 /* eslint-disable prettier/prettier */
 
@@ -169,15 +171,18 @@ var addToCart = /*#__PURE__*/function () {
             return _context.abrupt("return", _book);
 
           case 43:
-            _context.next = 48;
+            _context.next = 49;
             break;
 
           case 45:
             _context.prev = 45;
             _context.t0 = _context["catch"](0);
+
+            _logger["default"].error(_context.t0);
+
             throw new Error("Cannot add the book to cart!");
 
-          case 48:
+          case 49:
           case "end":
             return _context.stop();
         }
@@ -357,15 +362,18 @@ var removeBookFromCart = /*#__PURE__*/function () {
             return _context2.abrupt("return", _data2);
 
           case 61:
-            _context2.next = 66;
+            _context2.next = 67;
             break;
 
           case 63:
             _context2.prev = 63;
             _context2.t0 = _context2["catch"](0);
+
+            _logger["default"].error(_context2.t0);
+
             return _context2.abrupt("return", 'Cannot remove book from cart');
 
-          case 66:
+          case 67:
           case "end":
             return _context2.stop();
         }
@@ -428,15 +436,18 @@ var confirmBooking = /*#__PURE__*/function () {
             return _context3.abrupt("return", checkout);
 
           case 13:
-            _context3.next = 18;
+            _context3.next = 19;
             break;
 
           case 15:
             _context3.prev = 15;
             _context3.t0 = _context3["catch"](0);
+
+            _logger["default"].error(_context3.t0);
+
             return _context3.abrupt("return", 'Cannot check out your order.');
 
-          case 18:
+          case 19:
           case "end":
             return _context3.stop();
         }
@@ -450,3 +461,43 @@ var confirmBooking = /*#__PURE__*/function () {
 }();
 
 exports.confirmBooking = confirmBooking;
+
+var viewCart = /*#__PURE__*/function () {
+  var _ref4 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(id) {
+    var cart;
+    return _regenerator["default"].wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            _context4.prev = 0;
+            _context4.next = 3;
+            return _cart["default"].findOne({
+              userId: id.userId
+            });
+
+          case 3:
+            cart = _context4.sent;
+            return _context4.abrupt("return", cart);
+
+          case 7:
+            _context4.prev = 7;
+            _context4.t0 = _context4["catch"](0);
+
+            _logger["default"].error(_context4.t0);
+
+            return _context4.abrupt("return", 'Cannot view your cart');
+
+          case 11:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4, null, [[0, 7]]);
+  }));
+
+  return function viewCart(_x4) {
+    return _ref4.apply(this, arguments);
+  };
+}();
+
+exports.viewCart = viewCart;

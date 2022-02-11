@@ -29,6 +29,8 @@ cartRouter.post('/:_id', _auth.userAuth, _cart2.newCartValidator, cartController
 
 cartRouter.put('/', _auth.userAuth, cartController.removeBookFromCart); //route to confirm booking
 
-cartRouter.put('/:_id', _auth.userAuth, cartController.confirmBooking);
+cartRouter.put('/:_id', _auth.userAuth, cartController.confirmBooking); //route to view cart
+
+cartRouter.get('/', _auth.userAuth, cartController.viewCart);
 var _default = cartRouter;
 exports["default"] = _default;

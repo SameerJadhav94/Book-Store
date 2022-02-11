@@ -5,6 +5,7 @@
 /* eslint-disable prettier/prettier */
 import Cart from '../models/cart.model';
 import Book from '../models/book.model';
+import logger from '../config/logger'
 /**
  * Service For Add To Cart
  * @param {object} cart cart object
@@ -87,6 +88,7 @@ export const addToCart = async (cart) => {
       }
     }
   } catch (error) {
+    logger.error(error);
     throw new Error(`Cannot add the book to cart!`);
   }
 };
@@ -199,6 +201,7 @@ export const removeBookFromCart = async (body) => {
       }
     }
   } catch (error) {
+    logger.error(error);
     return 'Cannot remove book from cart';
   }
 };
@@ -228,6 +231,17 @@ export const confirmBooking = async (id) => {
       return checkout;
     }
   } catch (error) {
+    logger.error(error);
     return 'Cannot check out your order.';
   }
 };
+
+export const viewCart = async (id) => {
+  try {
+    const cart = await Cart.findOne({userId:id.userId});
+    return cart;
+  }catch (error) {
+    logger.error(error);
+    return 'Cannot view your cart'
+  }
+}

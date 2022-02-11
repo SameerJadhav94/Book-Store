@@ -78,3 +78,26 @@ export const confirmBooking = async (req, res, next) => {
     next(error);
   }
 };
+
+export const viewCart = async (req, res, next) => {
+  try{
+    const id = {
+      userId: req.user._id
+    }
+    const data = await CartService.viewCart(id);
+    if(data==='Cannot view your cart'){
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: 'Problem occured while viewing your cart'
+      });
+    }else{
+      res.status(HttpStatus.OK).json({
+        code: HttpStatus.OK,
+        message: 'Your cart has....',
+        data: data
+      });
+    }
+  }catch(error){
+    next(error);
+  }
+}

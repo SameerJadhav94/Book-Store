@@ -598,6 +598,34 @@
                         "description": "Couldnt Remove Books From Cart"
                     }
                 }
+            },
+            "get": {
+                "tags": [
+                    "View cart"
+                ],
+                "description": "View books in cart",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "authorization",
+                        "description": "Token for validation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Here is your Cart"
+                    },
+                    "500": {
+                        "description": "Error ocurred while making search."
+                    }
+                }
             }
         },
         "/search/{title}": {

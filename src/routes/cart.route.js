@@ -12,5 +12,7 @@ cartRouter.post('/:_id', userAuth, newCartValidator, cartController.addToCart);
 cartRouter.put('/', userAuth, cartController.removeBookFromCart);
 //route to confirm booking
 cartRouter.put('/:_id', userAuth, cartController.confirmBooking);
+//route to view cart
+cartRouter.get('/', userAuth, cartController.viewCart);
 
 export default cartRouter;
