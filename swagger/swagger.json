@@ -1,0 +1,821 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0",
+        "title": "Book Store",
+        "description": "Book Store Application",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:3000/api/v1",
+    "basePath": "/",
+    "tags": [],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/users/user": {
+            "post": {
+                "tags": [
+                    "Register"
+                ],
+                "description": "Register new user",
+                "parameters": [
+                    {
+                        "name": "Register",
+                        "in": "body",
+                        "description": "Register here...",
+                        "schema": {
+                            "$ref": "#/definitions/registerUseruser"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "User has been registered"
+                    },
+                    "409": {
+                        "description": "User already exist..., try with different email id."
+                    },
+                    "500": {
+                        "description": "Server is facing issues while processing the request. Please try again."
+                    }
+                }
+            }
+        },
+        "/users/admin": {
+            "post": {
+                "tags": [
+                    "Register"
+                ],
+                "description": "Register new user",
+                "parameters": [
+                    {
+                        "name": "Register",
+                        "in": "body",
+                        "description": "Register here...",
+                        "schema": {
+                            "$ref": "#/definitions/registerUseruser"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "User has been registered"
+                    },
+                    "409": {
+                        "description": "User already exist..., try with different email id."
+                    },
+                    "500": {
+                        "description": "Server is facing issues while processing the request. Please try again."
+                    }
+                }
+            }
+        },
+        "/users/login": {
+            "post": {
+                "tags": [
+                    "Login"
+                ],
+                "description": "Login",
+                "parameters": [
+                    {
+                        "name": "Login",
+                        "in": "body",
+                        "description": "Login here...",
+                        "schema": {
+                            "$ref": "#/definitions/loginUser"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully logged-in"
+                    },
+                    "404": {
+                        "description": "Please enter valid credentials"
+                    }
+                }
+            }
+        },
+        "/users/forgotPassword": {
+            "post": {
+                "tags": [
+                    "Forgot Password"
+                ],
+                "description": "Forgot Password API to send OTP",
+                "parameters": [
+                    {
+                        "name": "forgot Password",
+                        "in": "body",
+                        "description": "Click here to generate otp for new password",
+                        "schema": {
+                            "$ref": "#/definitions/forgotPassword"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Otp has been successfully sent to your email, please use it for resetting your password."
+                    },
+                    "404": {
+                        "description": "Please enter valid credentials"
+                    },
+                    "500": {
+                        "description": "Internal Server Error, Could Not Send Email."
+                    }
+                }
+            }
+        },
+        "/users/resetPassword": {
+            "patch": {
+                "tags": [
+                    "Reset Password"
+                ],
+                "description": "Reset Password API To Change Password Using OTP Sent By Forgot Password API",
+                "parameters": [
+                    {
+                        "name": "reset Password",
+                        "in": "body",
+                        "description": "Click here to reset your password",
+                        "schema": {
+                            "$ref": "#/definitions/resetPassword"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Password Updated Successfully"
+                    },
+                    "404": {
+                        "description": "Please enter valid Credentials"
+                    },
+                    "500": {
+                        "description": "Internal Server Error, Could Not Reset Your Password."
+                    }
+                }
+            }
+        },
+        "/book/": {
+            "post": {
+                "tags": [
+                    "Add Book API"
+                ],
+                "description": "Add Book",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "authorization",
+                        "description": "Token for validation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "author",
+                        "in": "formData",
+                        "description": "author body",
+                        "schema": {
+                            "type": "object",
+                            "properties":{
+                                "author":{
+                                    "type": "string",
+                                    "required": true
+                                } }
+                        }
+                    },
+                    {
+                        "name": "title",
+                        "in": "formData",
+                        "description": "title body",
+                        "schema": {
+                            "type": "object",
+                            "properties":{
+                                "title":{
+                                    "type": "string",
+                                    "required": true
+                                } }
+                        }
+                    },
+                    {
+                        "name": "image",
+                        "in": "formData",
+                        "description": "image body",
+                        "type":"file",
+                        "required": true
+                    },
+                    {
+                        "name": "quantity",
+                        "in": "formData",
+                        "description": "quantity body",
+                        "schema": {
+                            "type": "object",
+                            "properties":{
+                                "quantity":{
+                                    "type": "number",
+                                    "required": true
+                                } }
+                        }
+                    },
+                    {
+                        "name": "price",
+                        "in": "formData",
+                        "description": "price body",
+                        "schema": {
+                            "type": "object",
+                            "properties":{
+                                "quantity":{
+                                    "price": "number",
+                                    "required": true
+                                } }
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "formData",
+                        "description": "description body",
+                        "schema": {
+                            "type": "object",
+                            "properties":{
+                                "quantity":{
+                                    "description": "string",
+                                    "required": true
+                                } }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Book Added succesfully !!"
+                    },
+                    "400": {
+                        "description": "Please enter Valid Token"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Get Books"
+                ],
+                "description": "Get Books For User",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for authentication",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "schema": {
+                    "$ref": "#/definitions/getBooks"
+                },
+                "responses": {
+                    "201": {
+                        "description": "Books has been fetched successfully."
+                    },
+                    "401": {
+                        "description": "Please enter Valid Token..."
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/book/{id}": {
+            "get": {
+                "tags": [
+                    "Get Books By Id"
+                ],
+                "description": "Fetch a book by its id",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for validation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Enter book id to retrieve book",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "schema": {
+                    "$ref": "#/definitions/getBookById"
+                },
+                "responses": {
+                    "201": {
+                        "description": "Book fetched succesfully !!"
+                    },
+                    "400": {
+                        "description": "Please enter Valid Token"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Update Book By Id"
+                ],
+                "description": "Update a book by using its id",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for validation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Enter the id of book to update",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "author",
+                        "in": "formData",
+                        "description": "author body",
+                        "schema": {
+                            "type": "object",
+                            "properties":{
+                                "author":{
+                                    "type": "string",
+                                    "required": true
+                                } }
+                        }
+                    },
+                    {
+                        "name": "title",
+                        "in": "formData",
+                        "description": "title body",
+                        "schema": {
+                            "type": "object",
+                            "properties":{
+                                "title":{
+                                    "type": "string",
+                                    "required": true
+                                } }
+                        }
+                    },
+                    {
+                        "name": "image",
+                        "in": "formData",
+                        "description": "image body",
+                        "type":"file",
+                        "required": true
+                    },
+                    {
+                        "name": "quantity",
+                        "in": "formData",
+                        "description": "quantity body",
+                        "schema": {
+                            "type": "object",
+                            "properties":{
+                                "quantity":{
+                                    "type": "number",
+                                    "required": true
+                                } }
+                        }
+                    },
+                    {
+                        "name": "price",
+                        "in": "formData",
+                        "description": "price body",
+                        "schema": {
+                            "type": "object",
+                            "properties":{
+                                "quantity":{
+                                    "price": "number",
+                                    "required": true
+                                } }
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "formData",
+                        "description": "description body",
+                        "schema": {
+                            "type": "object",
+                            "properties":{
+                                "quantity":{
+                                    "description": "string",
+                                    "required": true
+                                } }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Book updated succesfully !!"
+                    },
+                    "401": {
+                        "description": "Please enter Valid Token"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Delete Book "
+                ],
+                "description": "Delete a Specific Book ",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Enter the id of the book",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Book Deleted Successfully!!"
+                    },
+                    "401": {
+                        "description": "Something's wrong..., Please enter valid credentials"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/cart/{id}": {
+            "post": {
+                "tags": [
+                    "Add Book To Cart"
+                ],
+                "description": "Add To Cart",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "authorization",
+                        "description": "Token for validation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Book Id",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "in": "body",
+                        "name": "add to cart",
+                        "description": "add book to cart",
+                        "schema": {
+                            "$ref": "#/definitions/AddBookToCart"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "book added to cart"
+                    },
+                    "500": {
+                        "description": "Failed to add book"
+                    },
+                    "400": {
+                        "description": "Invalid Token"
+                    }
+                }
+            }
+        },
+        "/cart": {
+            "put": {
+                "tags": [
+                    "Remove Book From Cart"
+                ],
+                "description": "Remove Book from Cart",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "authorization",
+                        "description": "Token for validation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "in": "body",
+                        "name": "label",
+                        "description": "Label to be updated",
+                        "schema": {
+                            "$ref": "#/definitions/RemoveBookFromCart"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book Has Been Removed From Cart."
+                    },
+                    "500": {
+                        "description": "Couldnt Remove Books From Cart"
+                    }
+                }
+            }
+        },
+        "/search/{title}": {
+            "get": {
+                "tags": [
+                    "Search Book"
+                ],
+                "description": "Search Books",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "authorization",
+                        "description": "Token for validation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "title",
+                        "in": "path",
+                        "description": "Enter book id to retrieve book",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Books Matching Your Search...."
+                    },
+                    "500": {
+                        "description": "Error ocurred while making search."
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "registerUseruser": {
+            "type": "object",
+            "properties": {
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "loginUser": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "forgotPassword": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "resetPassword": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "code": {
+                    "type": "string"
+                }
+            }
+        },
+        "addBook": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "number"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "description": {
+                    "type": "string"
+                }
+            }
+        },
+        "getBooks": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "file"
+                },
+                "quantity": {
+                    "type": "number"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "description": {
+                    "type": "string"
+                }
+            },
+            "example": {
+                "author": "write author name ",
+                "title": "write title of book ",
+                "image":"upload an image",
+                "quantity":"enter quantity",
+                "price":"enter price",
+                "description":"write description of book"
+            }
+        },
+        "getBookById": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "file"
+                },
+                "quantity": {
+                    "type": "number"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "description": {
+                    "type": "string"
+                }
+            },
+            "example": {
+                "author": "write author name ",
+                "title": "write title of book ",
+                "quantity":"enter quantity",
+                "price":"enter price",
+                "description":"write description of book"
+            }
+        },
+        "updateBookById": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "number"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "description": {
+                    "type": "string"
+                }
+            },
+            "example": {
+                "author": "write author name ",
+                "title": "write title of book ",
+                "quantity":"enter quantity",
+                "price":"enter price",
+                "description":"write description of book"
+            }
+        },
+        "AddBookToCart": {
+            "type": "object",
+            "properties": {
+                "quantity": {
+                    "type": "number"
+                }
+            }
+        },
+        "RemoveBookFromCart": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "number"
+                }
+            }
+        }
+    }
+}

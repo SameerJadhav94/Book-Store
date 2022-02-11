@@ -31,6 +31,10 @@ var _multer = _interopRequireDefault(require("multer"));
 
 var _morgan = _interopRequireDefault(require("morgan"));
 
+var _swaggerUiExpress = _interopRequireDefault(require("swagger-ui-express"));
+
+var _swagger = _interopRequireDefault(require("../swagger/swagger.json"));
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -50,6 +54,7 @@ app.use(_express["default"].json());
 app.use((0, _morgan["default"])('combined', {
   stream: _logger.logStream
 }));
+app.use('/api-docs', _swaggerUiExpress["default"].serve, _swaggerUiExpress["default"].setup(_swagger["default"]));
 (0, _database["default"])();
 app.use("/api/".concat(api_version), (0, _routes["default"])());
 var upload = (0, _multer["default"])();

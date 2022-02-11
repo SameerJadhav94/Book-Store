@@ -82,36 +82,50 @@ exports.addToWishlist = addToWishlist;
 
 var removeFromWishList = /*#__PURE__*/function () {
   var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(req, res, next) {
-    var data;
+    var ids, data;
     return _regenerator["default"].wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.prev = 0;
-            _context2.next = 3;
-            return wishListService.removeFromWishList(req.params._id);
+            ids = {
+              userId: req.user._id,
+              bookId: req.params._id
+            };
+            _context2.next = 4;
+            return wishListService.removeFromWishList(ids);
 
-          case 3:
+          case 4:
             data = _context2.sent;
-            res.status(_httpStatusCodes["default"].OK).json({
-              code: _httpStatusCodes["default"].OK,
-              data: data,
-              message: "The Book has been removed from wish list!"
-            });
-            _context2.next = 10;
+
+            if (data === 'Cannot remove from wishlist') {
+              res.status(_httpStatusCodes["default"].INTERNAL_SERVER_ERROR).json({
+                code: _httpStatusCodes["default"].INTERNAL_SERVER_ERROR,
+                data: data,
+                message: "Error ocurred while removing books from wish list."
+              });
+            } else {
+              res.status(_httpStatusCodes["default"].OK).json({
+                code: _httpStatusCodes["default"].OK,
+                data: data,
+                message: "The Book has been removed from wish list!"
+              });
+            }
+
+            _context2.next = 11;
             break;
 
-          case 7:
-            _context2.prev = 7;
+          case 8:
+            _context2.prev = 8;
             _context2.t0 = _context2["catch"](0);
             next(_context2.t0);
 
-          case 10:
+          case 11:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[0, 7]]);
+    }, _callee2, null, [[0, 8]]);
   }));
 
   return function removeFromWishList(_x4, _x5, _x6) {

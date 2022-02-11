@@ -7,7 +7,7 @@ import Book from '../models/book.model';
 
 export const addToWishlist = async (id, List) => {
   try {
-    const listCheck = await WishList.findOne();
+    const listCheck = await WishList.findOne({userId:List.userId});
     const bookData = await Book.findById(id);
     if (listCheck) {
       const book = {
@@ -38,21 +38,19 @@ export const addToWishlist = async (id, List) => {
       };
       List.books = [book];
       const data = await WishList.create(List);
-      console.log(data);
       return data;
     }
   } catch (error) {
+    console.log(error);
     return 'Cannot add to wishlist';
   }
 };
 
 export const removeFromWishList = async (id) => {
   try {
-    const wishlist = await WishList.findOne();
-    const updatedlist = await WishList.findByIdAndUpdate({ _id: wishlist._id }, { $pull: { books: { bookId: id } } }, { new: true });
+    const updatedlist = await WishList.findOneAndUpdate({ userId: id.userId }, { $pull: { books: { bookId: id.bookId } } }, { new: true });
     return updatedlist;
   } catch (error) {
-    console.log(error);
     return 'Cannot remove from wishlist';
   }
 };

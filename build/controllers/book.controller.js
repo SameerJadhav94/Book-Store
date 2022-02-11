@@ -293,19 +293,16 @@ exports.deleteBookById = deleteBookById;
 
 var searchBook = /*#__PURE__*/function () {
   var _ref6 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee6(req, res, next) {
-    var bookName, data;
+    var data;
     return _regenerator["default"].wrap(function _callee6$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
           case 0:
             _context6.prev = 0;
-            bookName = {
-              title: req.body.title
-            };
-            _context6.next = 4;
-            return BookService.searchBook(bookName);
+            _context6.next = 3;
+            return BookService.searchBook(req.params.title);
 
-          case 4:
+          case 3:
             data = _context6.sent;
 
             if (data === 'Problem Occured') {
@@ -313,27 +310,28 @@ var searchBook = /*#__PURE__*/function () {
                 code: _httpStatusCodes["default"].INTERNAL_SERVER_ERROR,
                 message: "Error occurred while searching for results."
               });
+            } else {
+              res.status(_httpStatusCodes["default"].OK).json({
+                code: _httpStatusCodes["default"].OK,
+                data: data,
+                message: "Here are results matching your search..."
+              });
             }
 
-            res.status(_httpStatusCodes["default"].OK).json({
-              code: _httpStatusCodes["default"].OK,
-              data: data,
-              message: "Here are results matching your search..."
-            });
-            _context6.next = 12;
+            _context6.next = 10;
             break;
 
-          case 9:
-            _context6.prev = 9;
+          case 7:
+            _context6.prev = 7;
             _context6.t0 = _context6["catch"](0);
             next(_context6.t0);
 
-          case 12:
+          case 10:
           case "end":
             return _context6.stop();
         }
       }
-    }, _callee6, null, [[0, 9]]);
+    }, _callee6, null, [[0, 7]]);
   }));
 
   return function searchBook(_x16, _x17, _x18) {

@@ -124,21 +124,19 @@ export const deleteBookById = async (req, res, next) => {
 
 export const searchBook = async (req, res, next) => {
   try {
-    const bookName = {
-      title: req.body.title,
-    }
-    const data = await BookService.searchBook(bookName);
+    const data = await BookService.searchBook(req.params.title);
     if (data==='Problem Occured') {
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
         code: HttpStatus.INTERNAL_SERVER_ERROR,
         message: `Error occurred while searching for results.`
       });
+    }else{
+      res.status(HttpStatus.OK).json({
+        code: HttpStatus.OK,
+        data: data,
+        message: `Here are results matching your search...`
+      });
     }
-    res.status(HttpStatus.OK).json({
-      code: HttpStatus.OK,
-      data: data,
-      message: `Here are results matching your search...`
-    });
   } catch (err) {
     next(err);
   }

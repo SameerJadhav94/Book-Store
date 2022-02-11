@@ -22,6 +22,6 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 /* eslint-disable prettier/prettier */
 var searchRouter = _express["default"].Router();
 
-searchRouter.get('/', _auth.userAuth, bookController.searchBook);
+searchRouter.get('/:title', _auth.userAuth, bookController.searchBook);
 var _default = searchRouter;
 exports["default"] = _default;

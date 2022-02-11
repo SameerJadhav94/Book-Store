@@ -185,7 +185,7 @@ var searchBook = /*#__PURE__*/function () {
             return _book["default"].find({
               $or: [{
                 title: {
-                  $regex: bookName.title,
+                  $regex: bookName,
                   $options: 'i'
                 }
               }]

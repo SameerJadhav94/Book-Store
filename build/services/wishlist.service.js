@@ -32,7 +32,9 @@ var addToWishlist = /*#__PURE__*/function () {
           case 0:
             _context.prev = 0;
             _context.next = 3;
-            return _wishlist["default"].findOne();
+            return _wishlist["default"].findOne({
+              userId: List.userId
+            });
 
           case 3:
             listCheck = _context.sent;
@@ -80,7 +82,7 @@ var addToWishlist = /*#__PURE__*/function () {
             return _context.abrupt("return", data);
 
           case 20:
-            _context.next = 29;
+            _context.next = 28;
             break;
 
           case 22:
@@ -96,16 +98,16 @@ var addToWishlist = /*#__PURE__*/function () {
 
           case 26:
             _data = _context.sent;
-            console.log(_data);
             return _context.abrupt("return", _data);
 
-          case 29:
+          case 28:
             _context.next = 34;
             break;
 
-          case 31:
-            _context.prev = 31;
+          case 30:
+            _context.prev = 30;
             _context.t0 = _context["catch"](0);
+            console.log(_context.t0);
             return _context.abrupt("return", 'Cannot add to wishlist');
 
           case 34:
@@ -113,7 +115,7 @@ var addToWishlist = /*#__PURE__*/function () {
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 31]]);
+    }, _callee, null, [[0, 30]]);
   }));
 
   return function addToWishlist(_x, _x2) {
@@ -125,46 +127,40 @@ exports.addToWishlist = addToWishlist;
 
 var removeFromWishList = /*#__PURE__*/function () {
   var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(id) {
-    var wishlist, updatedlist;
+    var updatedlist;
     return _regenerator["default"].wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.prev = 0;
             _context2.next = 3;
-            return _wishlist["default"].findOne();
-
-          case 3:
-            wishlist = _context2.sent;
-            _context2.next = 6;
-            return _wishlist["default"].findByIdAndUpdate({
-              _id: wishlist._id
+            return _wishlist["default"].findOneAndUpdate({
+              userId: id.userId
             }, {
               $pull: {
                 books: {
-                  bookId: id
+                  bookId: id.bookId
                 }
               }
             }, {
               "new": true
             });
 
-          case 6:
+          case 3:
             updatedlist = _context2.sent;
             return _context2.abrupt("return", updatedlist);
 
-          case 10:
-            _context2.prev = 10;
+          case 7:
+            _context2.prev = 7;
             _context2.t0 = _context2["catch"](0);
-            console.log(_context2.t0);
             return _context2.abrupt("return", 'Cannot remove from wishlist');
 
-          case 14:
+          case 10:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[0, 10]]);
+    }, _callee2, null, [[0, 7]]);
   }));
 
   return function removeFromWishList(_x3) {

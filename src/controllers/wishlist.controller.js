@@ -32,7 +32,11 @@ export const addToWishlist = async (req, res, next) => {
 
 export const removeFromWishList = async (req, res, next) => {
   try {
-    const data = await wishListService.removeFromWishList(req.params._id);
+    const ids = {
+      userId: req.user._id,
+      bookId: req.params._id
+    }
+    const data = await wishListService.removeFromWishList(ids);
     if (data === 'Cannot remove from wishlist') {
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
         code: HttpStatus.INTERNAL_SERVER_ERROR,

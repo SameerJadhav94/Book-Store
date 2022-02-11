@@ -5,6 +5,6 @@ import { userAuth } from '../middlewares/auth.middleware';
 
 const searchRouter = express.Router();
 
-searchRouter.get('/', userAuth, bookController.searchBook)
+searchRouter.get('/:title', userAuth, bookController.searchBook)
 
 export default searchRouter;

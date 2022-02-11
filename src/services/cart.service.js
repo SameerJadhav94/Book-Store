@@ -18,7 +18,7 @@ export const addToCart = async (cart) => {
     } else if (cart.quantity > bookData.quantity) {
       return `Please select quantity less than ${bookData.quantity}.`;
     } else {
-      const checkCart = await Cart.findOne();
+      const checkCart = await Cart.findOne({userId:cart.userId});
       if (checkCart) {
         //Adding the quantity of the book
         checkCart.totalQuantity = checkCart.totalQuantity + cart.quantity;
@@ -98,7 +98,7 @@ export const addToCart = async (cart) => {
  */
 export const removeBookFromCart = async (body) => {
   try {
-    const cartData = await Cart.findOne();
+    const cartData = await Cart.findOne({userId:body.userId});
     if (!cartData) {
       return 'Cart is empty.';
     } else {

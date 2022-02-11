@@ -66,7 +66,9 @@ var addToCart = /*#__PURE__*/function () {
 
           case 12:
             _context.next = 14;
-            return _cart["default"].findOne();
+            return _cart["default"].findOne({
+              userId: cart.userId
+            });
 
           case 14:
             checkCart = _context.sent;
@@ -206,7 +208,9 @@ var removeBookFromCart = /*#__PURE__*/function () {
           case 0:
             _context2.prev = 0;
             _context2.next = 3;
-            return _cart["default"].findOne();
+            return _cart["default"].findOne({
+              userId: body.userId
+            });
 
           case 3:
             cartData = _context2.sent;
