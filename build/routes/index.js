@@ -35,6 +35,8 @@ var routes = function routes() {
   router.use('/ascending', _book.ascendingOrderRouter);
   router.use('/descending', _book.descendingOrderRouter);
   router.use('/alphabetical', _book.alphabeticalOrderRouter);
+  router.use('/priceLowToHigh', _book.bookPriceAscendSortRouter);
+  router.use('/priceHighToLow', _book.bookPriceDescendSortRouter);
   router.use('/cart', _cart["default"]);
   router.use('/search', _search["default"]);
   router.use('/wishlist', _wishlist["default"]);

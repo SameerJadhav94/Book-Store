@@ -318,6 +318,186 @@
                 }
             }
         },
+        "/ascending/":{
+            "get": {
+                "tags": [
+                    "Sort Book In Ascending Order"
+                ],
+                "description": "Sort Book In Ascending Order",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for authentication",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "schema": {
+                    "$ref": "#/definitions/getBooks"
+                },
+                "responses": {
+                    "201": {
+                        "description": "Books has been fetched successfully."
+                    },
+                    "401": {
+                        "description": "Please enter Valid Token..."
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/descending/":{
+            "get": {
+                "tags": [
+                    "Sort Book In Descending Order"
+                ],
+                "description": "Sort Book In Descending Order",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for authentication",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "schema": {
+                    "$ref": "#/definitions/getBooks"
+                },
+                "responses": {
+                    "201": {
+                        "description": "Books has been fetched successfully."
+                    },
+                    "401": {
+                        "description": "Please enter Valid Token..."
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/alphabetical/":{
+            "get": {
+                "tags": [
+                    "Sort Book In Alphabetical Order"
+                ],
+                "description": "Sort Book In Alphabetical Order",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for authentication",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "schema": {
+                    "$ref": "#/definitions/getBooks"
+                },
+                "responses": {
+                    "201": {
+                        "description": "Books has been fetched successfully."
+                    },
+                    "401": {
+                        "description": "Please enter Valid Token..."
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/priceLowToHigh/":{
+            "get": {
+                "tags": [
+                    "Sort Book by Price Low To High"
+                ],
+                "description": "Sort Book by Price Low To High",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for authentication",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "schema": {
+                    "$ref": "#/definitions/getBooks"
+                },
+                "responses": {
+                    "201": {
+                        "description": "Books has been fetched successfully."
+                    },
+                    "401": {
+                        "description": "Please enter Valid Token..."
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/priceHighToLow/":{
+            "get": {
+                "tags": [
+                    "Sort Book by Price High To Low"
+                ],
+                "description": "Sort Book by Price High To Low",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for authentication",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "schema": {
+                    "$ref": "#/definitions/getBooks"
+                },
+                "responses": {
+                    "201": {
+                        "description": "Books has been fetched successfully."
+                    },
+                    "401": {
+                        "description": "Please enter Valid Token..."
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
         "/book/{id}": {
             "get": {
                 "tags": [

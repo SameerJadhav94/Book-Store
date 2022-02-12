@@ -7,7 +7,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateBookById = exports.searchBook = exports.getBookById = exports.getBook = exports.descendingOrder = exports.deleteBookById = exports.ascendingOrder = exports.alphabeticalOrder = exports.addBook = void 0;
+exports.updateBookById = exports.searchBook = exports.priceLowToHighSort = exports.priceHighToLowSort = exports.getBookById = exports.getBook = exports.descendingOrder = exports.deleteBookById = exports.ascendingOrder = exports.alphabeticalOrder = exports.addBook = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -435,7 +435,7 @@ var descendingOrder = /*#__PURE__*/function () {
   return function descendingOrder(_x22, _x23, _x24) {
     return _ref8.apply(this, arguments);
   };
-}(); // Controller for sort book in descending order
+}(); // Controller for sort book in alphabetical order
 
 /**
  *
@@ -484,6 +484,104 @@ var alphabeticalOrder = /*#__PURE__*/function () {
   return function alphabeticalOrder(_x25, _x26, _x27) {
     return _ref9.apply(this, arguments);
   };
-}();
+}(); // Controller for sort book as per price from low to high
+
+/**
+ *
+ * @param {object} req request object
+ * @param {object} res  response object
+ * @param {object} next
+ */
+
 
 exports.alphabeticalOrder = alphabeticalOrder;
+
+var priceLowToHighSort = /*#__PURE__*/function () {
+  var _ref10 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee10(req, res, next) {
+    var data;
+    return _regenerator["default"].wrap(function _callee10$(_context10) {
+      while (1) {
+        switch (_context10.prev = _context10.next) {
+          case 0:
+            _context10.prev = 0;
+            _context10.next = 3;
+            return BookService.priceLowToHighSort();
+
+          case 3:
+            data = _context10.sent;
+            res.status(_httpStatusCodes["default"].OK).json({
+              code: _httpStatusCodes["default"].OK,
+              data: data,
+              message: "Your Books..."
+            });
+            _context10.next = 10;
+            break;
+
+          case 7:
+            _context10.prev = 7;
+            _context10.t0 = _context10["catch"](0);
+            next(_context10.t0);
+
+          case 10:
+          case "end":
+            return _context10.stop();
+        }
+      }
+    }, _callee10, null, [[0, 7]]);
+  }));
+
+  return function priceLowToHighSort(_x28, _x29, _x30) {
+    return _ref10.apply(this, arguments);
+  };
+}(); // Controller for sort book as per price from high to low
+
+/**
+ *
+ * @param {object} req request object
+ * @param {object} res  response object
+ * @param {object} next
+ */
+
+
+exports.priceLowToHighSort = priceLowToHighSort;
+
+var priceHighToLowSort = /*#__PURE__*/function () {
+  var _ref11 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee11(req, res, next) {
+    var data;
+    return _regenerator["default"].wrap(function _callee11$(_context11) {
+      while (1) {
+        switch (_context11.prev = _context11.next) {
+          case 0:
+            _context11.prev = 0;
+            _context11.next = 3;
+            return BookService.priceHighToLowSort();
+
+          case 3:
+            data = _context11.sent;
+            res.status(_httpStatusCodes["default"].OK).json({
+              code: _httpStatusCodes["default"].OK,
+              data: data,
+              message: "Your Books..."
+            });
+            _context11.next = 10;
+            break;
+
+          case 7:
+            _context11.prev = 7;
+            _context11.t0 = _context11["catch"](0);
+            next(_context11.t0);
+
+          case 10:
+          case "end":
+            return _context11.stop();
+        }
+      }
+    }, _callee11, null, [[0, 7]]);
+  }));
+
+  return function priceHighToLowSort(_x31, _x32, _x33) {
+    return _ref11.apply(this, arguments);
+  };
+}();
+
+exports.priceHighToLowSort = priceHighToLowSort;

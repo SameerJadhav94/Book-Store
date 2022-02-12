@@ -7,7 +7,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.descendingOrderRouter = exports.bookRouter = exports.ascendingOrderRouter = exports.alphabeticalOrderRouter = void 0;
+exports.descendingOrderRouter = exports.bookRouter = exports.bookPriceDescendSortRouter = exports.bookPriceAscendSortRouter = exports.ascendingOrderRouter = exports.alphabeticalOrderRouter = void 0;
 
 var _express = _interopRequireDefault(require("express"));
 
@@ -51,4 +51,14 @@ descendingOrderRouter.get('/', _auth.userAuth, bookController.descendingOrder); 
 var alphabeticalOrderRouter = _express["default"].Router();
 
 exports.alphabeticalOrderRouter = alphabeticalOrderRouter;
-alphabeticalOrderRouter.get('/', _auth.userAuth, bookController.alphabeticalOrder);
+alphabeticalOrderRouter.get('/', _auth.userAuth, bookController.alphabeticalOrder); //route to sort books as per price from low to high
+
+var bookPriceAscendSortRouter = _express["default"].Router();
+
+exports.bookPriceAscendSortRouter = bookPriceAscendSortRouter;
+bookPriceAscendSortRouter.get('/', _auth.userAuth, bookController.priceLowToHighSort); //route to sort books as per price from high to low
+
+var bookPriceDescendSortRouter = _express["default"].Router();
+
+exports.bookPriceDescendSortRouter = bookPriceDescendSortRouter;
+bookPriceDescendSortRouter.get('/', _auth.userAuth, bookController.priceHighToLowSort);

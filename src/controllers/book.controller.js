@@ -201,3 +201,43 @@ export const searchBook = async (req, res, next) => {
     next(err);
   }
 };
+
+// Controller for sort book as per price from low to high
+/**
+ *
+ * @param {object} req request object
+ * @param {object} res  response object
+ * @param {object} next
+ */
+ export const priceLowToHighSort = async (req, res, next) => {
+  try {
+    const data = await BookService.priceLowToHighSort();
+    res.status(HttpStatus.OK).json({
+      code: HttpStatus.OK,
+      data: data,
+      message: `Your Books...`
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Controller for sort book as per price from high to low
+/**
+ *
+ * @param {object} req request object
+ * @param {object} res  response object
+ * @param {object} next
+ */
+ export const priceHighToLowSort = async (req, res, next) => {
+  try {
+    const data = await BookService.priceHighToLowSort();
+    res.status(HttpStatus.OK).json({
+      code: HttpStatus.OK,
+      data: data,
+      message: `Your Books...`
+    });
+  } catch (err) {
+    next(err);
+  }
+};

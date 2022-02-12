@@ -11,7 +11,7 @@ export const addBook = async (body) => {
 
 //get book
 export const getBook = async () => {
-  const data = await Book.find().sort({ updatedAt: -1 });
+  const data = await Book.find();
   return data;
 };
 
@@ -56,8 +56,21 @@ export const descendingOrder = async () => {
   const data = await Book.find().sort({ updatedAt: -1 });
   return data;
 };
+
 //sort order in alphabetical order
 export const alphabeticalOrder = async () => {
   const data = await Book.find({ 'title': { '$exists': true } }).sort({'title': 1})
+  return data;
+};
+
+//sort order of books as per price from low to high
+export const priceLowToHighSort = async () => {
+  const data = await Book.find({ 'price': { '$exists': true } }).sort({'price': 1})
+  return data;
+};
+
+//sort order of books as per price from high to low
+export const priceHighToLowSort = async () => {
+  const data = await Book.find({ 'price': { '$exists': true } }).sort({'price': -1})
   return data;
 };

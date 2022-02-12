@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateBookById = exports.searchBook = exports.getBookById = exports.getBook = exports.descendingOrder = exports.deleteBookById = exports.ascendingOrder = exports.alphabeticalOrder = exports.addBook = void 0;
+exports.updateBookById = exports.searchBook = exports.priceLowToHighSort = exports.priceHighToLowSort = exports.getBookById = exports.getBook = exports.descendingOrder = exports.deleteBookById = exports.ascendingOrder = exports.alphabeticalOrder = exports.addBook = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -57,9 +57,7 @@ var getBook = /*#__PURE__*/function () {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.next = 2;
-            return _book["default"].find().sort({
-              updatedAt: -1
-            });
+            return _book["default"].find();
 
           case 2:
             data = _context2.sent;
@@ -309,6 +307,78 @@ var alphabeticalOrder = /*#__PURE__*/function () {
   return function alphabeticalOrder() {
     return _ref9.apply(this, arguments);
   };
-}();
+}(); //sort order of books as per price from low to high
+
 
 exports.alphabeticalOrder = alphabeticalOrder;
+
+var priceLowToHighSort = /*#__PURE__*/function () {
+  var _ref10 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee10() {
+    var data;
+    return _regenerator["default"].wrap(function _callee10$(_context10) {
+      while (1) {
+        switch (_context10.prev = _context10.next) {
+          case 0:
+            _context10.next = 2;
+            return _book["default"].find({
+              'price': {
+                '$exists': true
+              }
+            }).sort({
+              'price': 1
+            });
+
+          case 2:
+            data = _context10.sent;
+            return _context10.abrupt("return", data);
+
+          case 4:
+          case "end":
+            return _context10.stop();
+        }
+      }
+    }, _callee10);
+  }));
+
+  return function priceLowToHighSort() {
+    return _ref10.apply(this, arguments);
+  };
+}(); //sort order of books as per price from high to low
+
+
+exports.priceLowToHighSort = priceLowToHighSort;
+
+var priceHighToLowSort = /*#__PURE__*/function () {
+  var _ref11 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee11() {
+    var data;
+    return _regenerator["default"].wrap(function _callee11$(_context11) {
+      while (1) {
+        switch (_context11.prev = _context11.next) {
+          case 0:
+            _context11.next = 2;
+            return _book["default"].find({
+              'price': {
+                '$exists': true
+              }
+            }).sort({
+              'price': -1
+            });
+
+          case 2:
+            data = _context11.sent;
+            return _context11.abrupt("return", data);
+
+          case 4:
+          case "end":
+            return _context11.stop();
+        }
+      }
+    }, _callee11);
+  }));
+
+  return function priceHighToLowSort() {
+    return _ref11.apply(this, arguments);
+  };
+}();
+
+exports.priceHighToLowSort = priceHighToLowSort;
