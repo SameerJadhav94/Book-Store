@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateBookById = exports.searchBook = exports.getBookById = exports.getBook = exports.deleteBookById = exports.addBook = void 0;
+exports.updateBookById = exports.searchBook = exports.getBookById = exports.getBook = exports.descendingOrder = exports.deleteBookById = exports.ascendingOrder = exports.alphabeticalOrder = exports.addBook = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -211,6 +211,104 @@ var searchBook = /*#__PURE__*/function () {
   return function searchBook(_x6) {
     return _ref6.apply(this, arguments);
   };
-}();
+}(); //sort order in ascending order
+
 
 exports.searchBook = searchBook;
+
+var ascendingOrder = /*#__PURE__*/function () {
+  var _ref7 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee7() {
+    var data;
+    return _regenerator["default"].wrap(function _callee7$(_context7) {
+      while (1) {
+        switch (_context7.prev = _context7.next) {
+          case 0:
+            _context7.next = 2;
+            return _book["default"].find();
+
+          case 2:
+            data = _context7.sent;
+            return _context7.abrupt("return", data);
+
+          case 4:
+          case "end":
+            return _context7.stop();
+        }
+      }
+    }, _callee7);
+  }));
+
+  return function ascendingOrder() {
+    return _ref7.apply(this, arguments);
+  };
+}(); //sort order in descending order
+
+
+exports.ascendingOrder = ascendingOrder;
+
+var descendingOrder = /*#__PURE__*/function () {
+  var _ref8 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee8() {
+    var data;
+    return _regenerator["default"].wrap(function _callee8$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
+          case 0:
+            _context8.next = 2;
+            return _book["default"].find().sort({
+              updatedAt: -1
+            });
+
+          case 2:
+            data = _context8.sent;
+            return _context8.abrupt("return", data);
+
+          case 4:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, _callee8);
+  }));
+
+  return function descendingOrder() {
+    return _ref8.apply(this, arguments);
+  };
+}(); //sort order in alphabetical order
+
+
+exports.descendingOrder = descendingOrder;
+
+var alphabeticalOrder = /*#__PURE__*/function () {
+  var _ref9 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee9() {
+    var data;
+    return _regenerator["default"].wrap(function _callee9$(_context9) {
+      while (1) {
+        switch (_context9.prev = _context9.next) {
+          case 0:
+            _context9.next = 2;
+            return _book["default"].find({
+              'title': {
+                '$exists': true
+              }
+            }).sort({
+              'title': 1
+            });
+
+          case 2:
+            data = _context9.sent;
+            return _context9.abrupt("return", data);
+
+          case 4:
+          case "end":
+            return _context9.stop();
+        }
+      }
+    }, _callee9);
+  }));
+
+  return function alphabeticalOrder() {
+    return _ref9.apply(this, arguments);
+  };
+}();
+
+exports.alphabeticalOrder = alphabeticalOrder;

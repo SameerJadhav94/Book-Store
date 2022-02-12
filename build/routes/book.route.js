@@ -7,7 +7,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.descendingOrderRouter = exports.bookRouter = exports.ascendingOrderRouter = exports.alphabeticalOrderRouter = void 0;
 
 var _express = _interopRequireDefault(require("express"));
 
@@ -27,6 +27,7 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 var bookRouter = _express["default"].Router(); //route to add book
 
 
+exports.bookRouter = bookRouter;
 bookRouter.post('/', _auth.userAuth, _auth.userRole, _upload.upload.single('image'), _bookValidator.newBookValidator, bookController.addBook); //route to get book
 
 bookRouter.get('/', _auth.userAuth, bookController.getBook); //route to get book by id
@@ -35,6 +36,19 @@ bookRouter.get('/:_id', _auth.userAuth, bookController.getBookById); //route to 
 
 bookRouter.put('/:_id', _auth.userAuth, _auth.userRole, _upload.upload.single('image'), _bookValidator.newBookValidator, bookController.updateBookById); //route to delete book by id
 
-bookRouter["delete"]('/:_id', _auth.userAuth, _auth.userRole, bookController.deleteBookById);
-var _default = bookRouter;
-exports["default"] = _default;
+bookRouter["delete"]('/:_id', _auth.userAuth, _auth.userRole, bookController.deleteBookById); //route to sort books in ascending order
+
+var ascendingOrderRouter = _express["default"].Router();
+
+exports.ascendingOrderRouter = ascendingOrderRouter;
+ascendingOrderRouter.get('/', _auth.userAuth, bookController.ascendingOrder); //route to sort books in descending order
+
+var descendingOrderRouter = _express["default"].Router();
+
+exports.descendingOrderRouter = descendingOrderRouter;
+descendingOrderRouter.get('/', _auth.userAuth, bookController.descendingOrder); //route to sort books in alphabetical order by title
+
+var alphabeticalOrderRouter = _express["default"].Router();
+
+exports.alphabeticalOrderRouter = alphabeticalOrderRouter;
+alphabeticalOrderRouter.get('/', _auth.userAuth, bookController.alphabeticalOrder);

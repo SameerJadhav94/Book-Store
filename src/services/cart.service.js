@@ -236,6 +236,11 @@ export const confirmBooking = async (id) => {
   }
 };
 
+/**
+ * Service for view cart
+ * @param id- user id
+ * @returns 
+ */
 export const viewCart = async (id) => {
   try {
     const cart = await Cart.findOne({userId:id.userId});

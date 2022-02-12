@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 
 import userRoute from './user.route';
-import bookRoute from './book.route';
+import { bookRouter, ascendingOrderRouter, descendingOrderRouter, alphabeticalOrderRouter } from './book.route';
 import cartRoute from './cart.route';
 import searchRoute from './search.route';
 import wishlistRoute from './wishlist.route';
@@ -16,7 +16,10 @@ const routes = () => {
     res.json('Welcome');
   });
   router.use('/users', userRoute);
-  router.use('/book', bookRoute);
+  router.use('/book', bookRouter);
+  router.use('/ascending', ascendingOrderRouter);
+  router.use('/descending', descendingOrderRouter);
+  router.use('/alphabetical', alphabeticalOrderRouter);
   router.use('/cart', cartRoute);
   router.use('/search', searchRoute);
   router.use('/wishlist', wishlistRoute);

@@ -26,16 +26,63 @@ describe('User APIs Test', () => {
     done();
   });
 
-  describe('GET /users', () => {
-    it('should return empty array', (done) => {
+  describe('POST /users', () => {
+    it('given registration details when proper and role is user should save in DB', (done) => {
+      const register = {
+        firstName: 'Sameerone',
+        lastName: 'Jadhav',
+        email: 'sameerone@gmail.com',
+        password: 'Sameer123'
+      };
       request(app)
-        .get('/api/v1/users')
+        .post('/api/v1/users/user')
+        .send(register)
         .end((err, res) => {
-          expect(res.statusCode).to.be.equal(200);
-          expect(res.body.data).to.be.an('array');
+          expect(res.statusCode).to.be.equal(201);
 
           done();
         });
     });
   });
+  describe('POST /users', () => {
+    it.only('given registration details when proper and role is admin should save in DB, login and forgot password', (done) => {
+      const register = {
+        firstName: 'Sameerone',
+        lastName: 'Jadhav',
+        email: 'sameerone@gmail.com',
+        password: 'Sameer123'
+      };
+      const login = {
+        email: 'sameerone@gmail.com',
+        password: 'Sameer123'
+      };
+      const forgotpassword = {
+        email: 'sameerone@gmail.com'
+      };
+      request(app)
+        .post('/api/v1/users/admin')
+        .send(register)
+        .end((err, res) => {
+          expect(res.statusCode).to.be.equal(201);
+          request(app)
+            .post('/api/v1/users/login')
+            .send(login)
+            .end((err, res) => {
+              expect(res.statusCode).to.be.equal(200);
+              request(app)
+                .post('/api/v1/users/forgotpassword')
+                .send(forgotpassword)
+                .end((err, res) => {
+                  expect(res.statusCode).to.be.equal(200);
+                  done();
+                });
+            });
+        });
+    });
+  });
+  // describe('/book', () => {
+  //   it.only('given book details if proper should save in DB', (done) => {
+
+  //   });
+  // });
 });

@@ -5,7 +5,7 @@ import { newBookValidator } from '../validators/bookValidator';
 import {userAuth, userRole} from '../middlewares/auth.middleware';
 import { upload } from '../middlewares/upload';
 
-const bookRouter = express.Router();
+export const bookRouter = express.Router();
 //route to add book
 bookRouter.post('/', userAuth, userRole, upload.single('image'), newBookValidator, bookController.addBook);
 
@@ -21,4 +21,14 @@ bookRouter.put('/:_id', userAuth, userRole, upload.single('image'), newBookValid
 //route to delete book by id
 bookRouter.delete('/:_id', userAuth, userRole, bookController.deleteBookById);
 
-export default bookRouter;
+//route to sort books in ascending order
+export const ascendingOrderRouter = express.Router();
+ascendingOrderRouter.get('/', userAuth, bookController.ascendingOrder);
+
+//route to sort books in descending order
+export const descendingOrderRouter = express.Router();
+descendingOrderRouter.get('/', userAuth, bookController.descendingOrder);
+
+//route to sort books in alphabetical order by title
+export const alphabeticalOrderRouter = express.Router();
+alphabeticalOrderRouter.get('/', userAuth, bookController.alphabeticalOrder);

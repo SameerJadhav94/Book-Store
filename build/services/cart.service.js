@@ -459,6 +459,12 @@ var confirmBooking = /*#__PURE__*/function () {
     return _ref3.apply(this, arguments);
   };
 }();
+/**
+ * Service for view cart
+ * @param id- user id
+ * @returns 
+ */
+
 
 exports.confirmBooking = confirmBooking;
 

@@ -44,3 +44,20 @@ export const searchBook = async (bookName) => {
     return 'Problem Occured';
   }
 };
+
+//sort order in ascending order
+export const ascendingOrder = async () => {
+  const data = await Book.find();
+  return data;
+};
+
+//sort order in descending order
+export const descendingOrder = async () => {
+  const data = await Book.find().sort({ updatedAt: -1 });
+  return data;
+};
+//sort order in alphabetical order
+export const alphabeticalOrder = async () => {
+  const data = await Book.find({ 'title': { '$exists': true } }).sort({'title': 1})
+  return data;
+};
