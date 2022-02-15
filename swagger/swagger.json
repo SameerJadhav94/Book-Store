@@ -807,6 +807,90 @@
                     }
                 }
             }
+        },"/wishlist/{id}": {
+            "post": {
+                "tags": [
+                    "Add Book To Wish List"
+                ],
+                "description": "Add To Wish List",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "authorization",
+                        "description": "Token for validation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Book Id",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                ],
+                "schema": {
+                    "ref":"#/definitions/addToWishList"
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "book added to wishlist"
+                    },
+                    "500": {
+                        "description": "Error occured while adding book to wishlist"
+                    },
+                    "400": {
+                        "description": "Invalid Token"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Remove Book From Wish List"
+                ],
+                "description": "Remove Book From Wish List",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "authorization",
+                        "description": "Token for validation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Book Id",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "book added to wishlist"
+                    },
+                    "500": {
+                        "description": "Error occured while adding book to wishlist"
+                    },
+                    "400": {
+                        "description": "Invalid Token"
+                    }
+                }
+            }
         },
         "/search/{title}": {
             "get": {
